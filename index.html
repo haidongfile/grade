@@ -1107,11 +1107,7 @@ async function saveScores(){
   await LS.saveScores(currentLevel,currentSemester,currentGrade,currentSubjectCode,data);
   markClean();
   showToast('✅','บันทึกสำเร็จ',`${subject.name} — บันทึกคะแนนเรียบร้อย`);
-  const sel=document.getElementById('subject-select');
-  if(sel){
-    const opt=sel.querySelector(`option[value="${currentSubjectCode}"]`);
-    if(opt&&!opt.textContent.startsWith('✓')) opt.textContent='✓ '+opt.textContent;
-  }
+  renderScoresView();
 }
 
 function clearAllScores(){
