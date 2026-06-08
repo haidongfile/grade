@@ -21,10 +21,14 @@ const firebaseConfig = {
   messagingSenderId: "1051283875703",
   appId: "1:1051283875703:web:2421f9e3e9279008406372"
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-window.db = db;
-window.firebaseReady = true;
+try {
+  if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  window.db = firebase.firestore();
+  window.firebaseReady = true;
+} catch(e) {
+  console.warn('Firebase init error:', e);
+  window.firebaseReady = false;
+}
 </script>
 <style>
 :root {
@@ -721,32 +725,106 @@ function getSubjects(level, semester, grade) {
   return SECONDARY_SUBJECTS[semester]?.[grade] || [];
 }
 
-// ===================== STORAGE (localStorage) =====================
+// ===================== STORAGE (Firestore หลัก, localStorage เป็น cache) =====================
 const LS = {
-  getStudents(level, semester, grade) {
-    try { return JSON.parse(localStorage.getItem(`stu_${level}_${semester}_${grade}`)) || []; } catch { return []; }
-  },
-  saveStudents(level, semester, grade, names) {
-    localStorage.setItem(`stu_${level}_${semester}_${grade}`, JSON.stringify(names));
-  },
-  getScores(level, semester, grade, subjectCode) {
-    try { return JSON.parse(localStorage.getItem(`sc_${level}_${semester}_${grade}_${subjectCode}`)) || {}; } catch { return {}; }
-  },
-  saveScores(level, semester, grade, subjectCode, data) {
-    localStorage.setItem(`sc_${level}_${semester}_${grade}_${subjectCode}`, JSON.stringify(data));
-  },
-  getAllSubjectScoreKeys(level, semester, grade) {
-    const prefix = `sc_${level}_${semester}_${grade}_`;
-    const keys = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (k && k.startsWith(prefix)) keys.push(k.replace(prefix,''));
+  _cache: {},
+  _ck(...args){ return args.join('|'); },
+
+  async saveStudents(level, semester, grade, names) {
+    const ck = this._ck('stu',level,semester,grade);
+    this._cache[ck] = names;
+    localStorage.setItem(ck, JSON.stringify(names));
+    if(window.firebaseReady && window.db){
+      try {
+        await window.db.collection('students').doc(`${level}_${semester}`)
+          .collection(grade).doc('list')
+          .set({ names, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+      } catch(e){ console.warn('saveStudents error:',e); }
     }
-    return keys;
+  },
+
+  getStudents(level, semester, grade) {
+    const ck = this._ck('stu',level,semester,grade);
+    if(this._cache[ck] !== undefined) return this._cache[ck];
+    try { return JSON.parse(localStorage.getItem(ck))||[]; } catch { return []; }
+  },
+
+  async saveScores(level, semester, grade, subjectCode, data) {
+    const ck = this._ck('sc',level,semester,grade,subjectCode);
+    this._cache[ck] = data;
+    localStorage.setItem(ck, JSON.stringify(data));
+    if(window.firebaseReady && window.db){
+      try {
+        await window.db.collection('scores').doc(`${level}_${semester}`)
+          .collection(grade).doc(subjectCode)
+          .set({ data, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+      } catch(e){ console.warn('saveScores error:',e); }
+    }
+  },
+
+  getScores(level, semester, grade, subjectCode) {
+    const ck = this._ck('sc',level,semester,grade,subjectCode);
+    if(this._cache[ck] !== undefined) return this._cache[ck];
+    try { return JSON.parse(localStorage.getItem(ck))||{}; } catch { return {}; }
+  },
+
+  getAllSubjectScoreKeys(level, semester, grade) {
+    const pre = this._ck('sc',level,semester,grade,'');
+    const keys = new Set();
+    Object.keys(this._cache).forEach(k=>{
+      if(k.startsWith(pre)){ const c=k.slice(pre.length); if(c) keys.add(c); }
+    });
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(k&&k.startsWith(pre)){ const c=k.slice(pre.length); if(c) keys.add(c); }
+    }
+    return [...keys];
+  },
+
+  async syncFromFirestore() {
+    if(!window.firebaseReady || !window.db) return;
+    const cfg = {
+      primary:   { sems:['midyear','endyear'], grades:['p1','p2','p3','p4','p5','p6'] },
+      secondary: { sems:['term1','term2'],     grades:['m1','m2','m3'] },
+    };
+    const promises = [];
+    for(const [level,{sems,grades}] of Object.entries(cfg)){
+      for(const sem of sems){
+        for(const grade of grades){
+          promises.push(
+            window.db.collection('students').doc(`${level}_${sem}`)
+              .collection(grade).doc('list').get()
+              .then(snap=>{
+                if(snap.exists){
+                  const names=snap.data().names||[];
+                  const ck=this._ck('stu',level,sem,grade);
+                  this._cache[ck]=names;
+                  localStorage.setItem(ck,JSON.stringify(names));
+                }
+              }).catch(()=>{})
+          );
+          promises.push(
+            window.db.collection('scores').doc(`${level}_${sem}`)
+              .collection(grade).get()
+              .then(snap=>{
+                snap.forEach(doc=>{
+                  const data=doc.data().data||{};
+                  const ck=this._ck('sc',level,sem,grade,doc.id);
+                  this._cache[ck]=data;
+                  localStorage.setItem(ck,JSON.stringify(data));
+                });
+              }).catch(()=>{})
+          );
+        }
+      }
+    }
+    await Promise.all(promises);
+    console.log('✅ Synced from Firestore');
   }
 };
 
 // ===================== AUTH =====================
+
 const PASSWORD = '35020113';
 const SESSION_KEY = 'bnp_session';
 const SESSION_DURATION = 30 * 60 * 1000;
@@ -770,6 +848,17 @@ function showApp() {
   document.getElementById('page-login').classList.add('hidden');
   document.getElementById('page-app').classList.remove('hidden');
   goHome();
+  // รอ Firebase พร้อมแล้วค่อย sync
+  const waitAndSync = (attempts) => {
+    if(window.firebaseReady && window.db){
+      LS.syncFromFirestore().then(()=>{
+        showToast('☁️','ซิงก์ข้อมูลแล้ว','โหลดข้อมูลจาก Firestore เรียบร้อย');
+      }).catch(()=>{});
+    } else if(attempts > 0){
+      setTimeout(()=>waitAndSync(attempts-1), 300);
+    }
+  };
+  waitAndSync(20); // รอได้สูงสุด 6 วิ
 }
 document.addEventListener('DOMContentLoaded', () => {
   updateSchoolUI();
@@ -991,13 +1080,13 @@ function gradeSpan(g){
 function markDirty(){ isDirty=true; const el=document.getElementById('dirty-indicator'); if(el) el.style.visibility='visible'; }
 function markClean(){ isDirty=false; const el=document.getElementById('dirty-indicator'); if(el) el.style.visibility='hidden'; }
 
-function saveScores(){
+async function saveScores(){
   if(document.querySelectorAll('.score-input.error').length>0){ showToast('❌','กรอกคะแนนไม่ถูกต้อง','กรุณาตรวจสอบค่าที่ไฮไลต์สีแดง'); return; }
   const subjects=getSubjects(currentLevel,currentSemester,currentGrade);
   const subject=subjects.find(s=>s.code===currentSubjectCode);
   const students=LS.getStudents(currentLevel,currentSemester,currentGrade);
   const data={};
-  students.forEach((_,i)=>{
+  for(let i=0; i<students.length; i++){
     const k=document.querySelector(`input[data-idx="${i}"][data-type="kept"]`)?.value.trim();
     const e=document.querySelector(`input[data-idx="${i}"][data-type="exam"]`)?.value.trim();
     const isSpecialGrade = k==='ร' || k==='มส';
@@ -1009,11 +1098,10 @@ function saveScores(){
       const total=(kn!==null&&en!==null)?kn+en:null;
       data[i]={kept:kn,exam:en,total,grade:total!==null?calculateGrade(total):null};
     }
-  });
-  LS.saveScores(currentLevel,currentSemester,currentGrade,currentSubjectCode,data);
+  }
+  await LS.saveScores(currentLevel,currentSemester,currentGrade,currentSubjectCode,data);
   markClean();
   showToast('✅','บันทึกสำเร็จ',`${subject.name} — บันทึกคะแนนเรียบร้อย`);
-  // refresh dropdown option to show ✓
   const sel=document.getElementById('subject-select');
   if(sel){
     const opt=sel.querySelector(`option[value="${currentSubjectCode}"]`);
@@ -1089,9 +1177,9 @@ function processExcelFile(file){
   };
   reader.readAsArrayBuffer(file);
 }
-function confirmImportFile(){
+async function confirmImportFile(){
   if(!pendingImportData) return;
-  showConfirm('⚠️','ยืนยันการนำเข้า','การนำเข้าจากไฟล์จะแทนที่รายชื่อนักเรียนทั้งหมดในทุกชั้นทุกภาคเรียน ดำเนินการต่อหรือไม่?',()=>{
+  showConfirm('⚠️','ยืนยันการนำเข้า','การนำเข้าจากไฟล์จะแทนที่รายชื่อนักเรียนทั้งหมดในทุกชั้นทุกภาคเรียน ดำเนินการต่อหรือไม่?', async ()=>{
     const classMap={'ป.1':'p1','ป.2':'p2','ป.3':'p3','ป.4':'p4','ป.5':'p5','ป.6':'p6','ม.1':'m1','ม.2':'m2','ม.3':'m3','ป1':'p1','ป2':'p2','ป3':'p3','ป4':'p4','ป5':'p5','ป6':'p6','ม1':'m1','ม2':'m2','ม3':'m3'};
     let count=0;
     for(const [rawClass,names] of Object.entries(pendingImportData)){
@@ -1100,7 +1188,7 @@ function confirmImportFile(){
       const isPrimary=gradeKey.startsWith('p');
       const semesters=isPrimary?['midyear','endyear']:['term1','term2'];
       const level=isPrimary?'primary':'secondary';
-      semesters.forEach(sem=>{ LS.saveStudents(level,sem,gradeKey,names); count++; });
+      for(const sem of semesters){ await LS.saveStudents(level,sem,gradeKey,names); count++; }
     }
     closeImportModal();
     closeSchoolSettings();
@@ -1134,13 +1222,13 @@ function loadBulkList(){
   const students=LS.getStudents(level,sem,grade);
   document.getElementById('bulk-textarea').value=students.join('\n');
 }
-function saveBulkList(){
+async function saveBulkList(){
   const level=document.getElementById('manual-level').value;
   const sem=document.getElementById('manual-semester').value;
   const grade=document.getElementById('manual-grade').value;
   if(!level||!sem||!grade){showToast('⚠️','กรุณาเลือกให้ครบ','เลือกระดับ ภาคเรียน และชั้น');return;}
   const names=document.getElementById('bulk-textarea').value.split('\n').map(l=>l.trim()).filter(Boolean);
-  LS.saveStudents(level,sem,grade,names);
+  await LS.saveStudents(level,sem,grade,names);
   closeImportModal();
   showToast('✅','บันทึกรายชื่อสำเร็จ',`${names.length} คน`);
 }
@@ -1245,7 +1333,9 @@ function getScore(s,i){ return sumLevel==='primary' ? getPrimaryAvgScore(sumGrad
 
 function printHeader(title){
   const {name, year} = getSchoolInfo();
-  const schoolLine = name ? `<div style="font-size:11px;color:var(--text-sub);margin-bottom:2px;">${name}${year?' ปีการศึกษา '+year:''}</div>` : '';
+  const schoolLine = name
+    ? `<div style="font-size:12px;color:var(--text-sub);margin-bottom:4px;">${name}${year ? ' ปีการศึกษา ' + year : ''}</div>`
+    : (year ? `<div style="font-size:12px;color:var(--text-sub);margin-bottom:4px;">ปีการศึกษา ${year}</div>` : '');
   return `<div class="print-header" style="margin-bottom:12px;">
     ${schoolLine}
     <h2 style="font-family:var(--font-display);font-size:17px;margin:0;">${title}</h2>
@@ -1264,7 +1354,7 @@ function renderSummaryTable(){
   const subjects=getSumSubjects();
   const students=getSumStudents();
   const gl=getGradeLabel(sumLevel,sumGrade);
-  const sl=sumLevel==='primary'?'ปีการศึกษา':getSemesterLabel(sumLevel,sumSemester);
+  const sl=sumLevel==='primary'?'':getSemesterLabel(sumLevel,sumSemester);
   const area=document.getElementById('summary-table-area');
   const isPrimary=sumLevel==='primary';
 
@@ -1304,7 +1394,7 @@ function renderSummaryTable(){
         ?`<tr><th style="width:40px">เลขที่</th><th>ชื่อ-นามสกุล</th><th>เก็บ<br/><span style="font-size:9px;font-weight:400">(กลาง)</span></th><th>สอบ<br/><span style="font-size:9px;font-weight:400">(กลาง)</span></th><th>รวม<br/><span style="font-size:9px;font-weight:400">(กลาง)</span></th><th>เก็บ<br/><span style="font-size:9px;font-weight:400">(ปลาย)</span></th><th>สอบ<br/><span style="font-size:9px;font-weight:400">(ปลาย)</span></th><th>รวม<br/><span style="font-size:9px;font-weight:400">(ปลาย)</span></th><th>เฉลี่ย</th><th>เกรด</th></tr>`
         :`<tr><th style="width:40px">เลขที่</th><th>ชื่อ-นามสกุล</th><th>คะแนนเก็บ</th><th>${examLabel}</th><th>รวม</th><th>เกรด</th></tr>`;
       return `<div class="${si>0?'print-page-break':''}" style="margin-bottom:28px;">
-        <div style="font-size:10px;color:var(--text-light);margin-bottom:2px;" class="print-only-show">${getSchoolInfo().name||''}</div>
+        <div style="font-size:10px;color:var(--text-light);margin-bottom:2px;">${getSchoolInfo().name||''} ${sl||''}</div>
         <div style="font-family:var(--font-display);font-size:15px;font-weight:500;color:var(--primary-dark);margin-bottom:2px;">
           <span style="font-size:11px;color:var(--text-light);margin-right:6px;">${s.code}</span>${s.name}
         </div>
@@ -1312,7 +1402,7 @@ function renderSummaryTable(){
         <div class="table-container"><table><thead>${thead}</thead><tbody>${rows.join('')}</tbody></table></div>
       </div>`;
     });
-    area.innerHTML=`<div id="print-area">${printHeader(`สรุปทุกวิชา (แยกรายวิชา) ${gl} — ${sl}`)}${sections.join('')}</div>`;
+    area.innerHTML=`<div id="print-area">${printHeader(`สรุปทุกวิชา (แยกรายวิชา) ${gl}${sl?' — '+sl:''}`)}${sections.join('')}</div>`;
 
   } else if(vt==='class-subject'){
     const code=subSel?.value||subjects[0]?.code;
