@@ -893,8 +893,7 @@ function goHome() {
   if(isDirty){ showUnsavedWarning(()=>{ isDirty=false; goHome(); }); return; }
   currentLevel=null; currentSemester=null; currentGrade=null; currentSubjectCode=null;
   showView('home');
-}
-function navigateTo(section) {
+}function navigateTo(section) {
   if(isDirty){ showUnsavedWarning(()=>{ isDirty=false; navigateTo(section); }); return; }
   if(section==='progress'){ showView('progress'); renderProgress(); return; }
   if(section==='summary'){ showView('summary'); renderSummary(); return; }
@@ -943,8 +942,7 @@ function selectGrade(g){
   currentSubjectCode=null;
   showView('scores');
   renderScoresView();
-}
-function goToScores(){ if(!currentSemester||!currentGrade){showToast('⚠️','กรุณาเลือกให้ครบ','เลือกภาคเรียนและชั้นก่อน');return;} showView('scores'); renderScoresView(); }
+}function goToScores(){ if(!currentSemester||!currentGrade){showToast('⚠️','กรุณาเลือกให้ครบ','เลือกภาคเรียนและชั้นก่อน');return;} showView('scores'); renderScoresView(); }
 function goToSummary(){ if(!currentSemester||!currentGrade){showToast('⚠️','กรุณาเลือกให้ครบ','เลือกภาคเรียนและชั้นก่อน');return;} showView('summary'); renderSummary(); }
 
 // ===================== SCORES =====================
@@ -958,7 +956,7 @@ function renderScoresView() {
   // populate dropdown
   const doneKeys = LS.getAllSubjectScoreKeys(currentLevel,currentSemester,currentGrade);
   const sel = document.getElementById('subject-select');
-  const prevVal = currentSubjectCode || sel.value;
+  const prevVal = currentSubjectCode; // ถ้า null = ไม่เลือกอะไร
   sel.innerHTML = '<option value="">— กรุณาเลือกวิชา —</option>' +
     subjects.map(s=>{
       const done = doneKeys.includes(s.code);
