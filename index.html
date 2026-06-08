@@ -1019,8 +1019,8 @@ function renderScoreTable(subjectCode){
   const tbody = document.getElementById('score-tbody');
   students.forEach((name,i)=>{
     const sc = subjectScores[i]||{};
-    const kept = sc.kept!==undefined?sc.kept:'';
-    const exam = sc.exam!==undefined?sc.exam:'';
+    const kept = (sc.kept!==undefined && sc.kept!==null && !isNaN(sc.kept)) ? sc.kept : (sc.kept==='ร'||sc.kept==='มส') ? sc.kept : '';
+    const exam = (sc.exam!==undefined && sc.exam!==null && !isNaN(sc.exam)) ? sc.exam : '';
     const isSpecial = ['ร','มส'].includes(String(kept));
     const total = isSpecial ? '' : (kept!==''&&exam!=='')?(Number(kept)+Number(exam)):'';
     const grade = isSpecial ? kept : (total!==''?calculateGrade(total):'');
@@ -1110,12 +1110,19 @@ async function saveScores(){
   renderScoresView();
 }
 
-function clearAllScores(){
-  showConfirm('🗑️','ล้างคะแนนทั้งหมด','ต้องการล้างคะแนนทั้งหมดในวิชานี้?',()=>{
+async function clearAllScores(){
+  showConfirm('🗑️','ล้างคะแนนทั้งหมด','ต้องการล้างคะแนนทั้งหมดในวิชานี้?', async ()=>{
     document.querySelectorAll('.score-input').forEach(i=>{i.value='';i.classList.remove('error');});
     document.querySelectorAll('[id^="total-"]').forEach(el=>el.innerHTML='<span class="grade-cell">—</span>');
     document.querySelectorAll('[id^="grade-"]').forEach(el=>el.textContent='—');
-    markDirty();
+    // บันทึก null ลง Firestore ทันที
+    const students = LS.getStudents(currentLevel,currentSemester,currentGrade);
+    const data = {};
+    students.forEach((_,i) => { data[i] = {kept:null, exam:null, total:null, grade:null}; });
+    await LS.saveScores(currentLevel,currentSemester,currentGrade,currentSubjectCode,data);
+    isDirty = false;
+    showToast('✅','ล้างคะแนนแล้ว','');
+    renderScoresView();
   },'ล้างคะแนน');
 }
 
