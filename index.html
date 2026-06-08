@@ -1640,9 +1640,17 @@ function renderProgress(){
       html+=`<div class="dash-card"><div class="dash-card-header"><div class="dash-card-title">${label}</div></div><div class="progress-list">`;
       for(const grade of grades){
         const subjects=getSubjects(level,semester,grade);
-        const doneKeys=LS.getAllSubjectScoreKeys(level,semester,grade);
-        const missing=subjects.filter(s=>!doneKeys.includes(s.code));
-        const done=subjects.length-missing.length; const total=subjects.length;
+        const doneSubjects=subjects.filter(s=>{
+          const scores=LS.getScores(level,semester,grade,s.code);
+          return Object.values(scores).some(sc=>
+            sc && (
+              (sc.kept!==null && sc.kept!==undefined && sc.kept!=='' && !isNaN(sc.kept)) ||
+              sc.kept==='ร' || sc.kept==='มส'
+            )
+          );
+        });
+        const missing=subjects.filter(s=>!doneSubjects.find(d=>d.code===s.code));
+        const done=doneSubjects.length; const total=subjects.length;
         const pct=total>0?Math.round(done/total*100):0;
         const fillClass=pct===100?'full':pct>0?'partial':'empty';
         const progressId=`prog-detail-${level}-${semester}-${grade}`;
