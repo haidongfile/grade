@@ -1668,12 +1668,17 @@ function renderProgress(){
           </div>
           <div id="${progressId}" class="hidden" style="margin:6px 0 10px;padding:10px 12px;background:var(--bg);border-radius:var(--radius-sm);border:1px solid var(--border-light);">
             ${missing.length===0
-              ? `<div style="color:var(--success);font-size:13px;">✅ กรอกครบทุกวิชาแล้ว</div>`
-              : `<div style="font-size:12px;color:var(--text-sub);margin-bottom:6px;">วิชาที่ยังไม่ได้กรอก:</div>
-                 <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                   ${missing.map(s=>`<span style="font-size:12px;background:var(--danger-soft);color:var(--danger);border-radius:6px;padding:3px 10px;cursor:pointer;" onclick="event.stopPropagation();goToSubjectDirect('${level}','${semester}','${grade}','${s.code}')">${s.name} →</span>`).join('')}
+              ? `<div style="color:var(--success);font-size:0.87em;">✅ กรอกครบทุกวิชาแล้ว</div>`
+              : `<div style="font-size:0.8em;color:var(--danger);font-weight:600;margin-bottom:4px;">ยังไม่ได้กรอก (${missing.length} วิชา):</div>
+                 <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:${doneSubjects.length>0?'10px':'0'};">
+                   ${missing.map(s=>`<span style="font-size:0.8em;background:var(--danger-soft);color:var(--danger);border-radius:6px;padding:3px 10px;cursor:pointer;" onclick="event.stopPropagation();goToSubjectDirect('${level}','${semester}','${grade}','${s.code}')">${s.name} →</span>`).join('')}
                  </div>`
             }
+            ${doneSubjects.length>0 ? `
+              <div style="font-size:0.8em;color:var(--success);font-weight:600;margin-bottom:4px;">กรอกแล้ว (${doneSubjects.length} วิชา):</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                ${doneSubjects.map(s=>`<span style="font-size:0.8em;background:var(--success-soft);color:#2a7a4a;border-radius:6px;padding:3px 10px;cursor:pointer;" onclick="event.stopPropagation();goToSubjectDirect('${level}','${semester}','${grade}','${s.code}')">${s.name} ✓</span>`).join('')}
+              </div>` : ''}
           </div>`;
       }
       html+=`</div></div>`;
