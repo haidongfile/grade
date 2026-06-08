@@ -488,9 +488,8 @@ footer { text-align: center; padding: 24px; font-size: 12.5px; color: var(--text
           <div style="font-size:32px;margin-bottom:12px;">🔒</div>
           <div style="font-size:14px;color:var(--text-sub);margin-bottom:16px;">ใส่รหัสแอดมินเพื่อแก้ไข Firebase Config</div>
           <div style="display:flex;gap:8px;justify-content:center;max-width:280px;margin:0 auto;">
-            <input type="password" id="firebase-admin-input" class="form-input" placeholder="รหัสแอดมิน" style="flex:1;"
-              onkeydown="if(event.key==='Enter')verifyFirebaseAdmin()" />
-            <button class="btn btn-primary btn-sm" onclick="verifyFirebaseAdmin()">เข้าสู่ระบบ</button>
+            <input type="password" id="firebase-admin-input" class="form-input" placeholder="รหัสแอดมิน" style="flex:1;" />
+            <button class="btn btn-primary btn-sm" id="firebase-admin-btn">เข้าสู่ระบบ</button>
           </div>
           <div id="firebase-admin-error" class="error-msg" style="margin-top:8px;text-align:center;"></div>
         </div>
@@ -797,6 +796,8 @@ document.addEventListener('DOMContentLoaded', () => {
   updateSchoolUI();
   initFirebaseFromSaved();
   document.getElementById('login-input').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+  document.getElementById('firebase-admin-input').addEventListener('keydown', e => { if(e.key==='Enter') verifyFirebaseAdmin(); });
+  document.getElementById('firebase-admin-btn').addEventListener('click', () => verifyFirebaseAdmin());
   if (checkSession()) showApp();
   window.addEventListener('beforeunload', e => { if(isDirty){ e.preventDefault(); e.returnValue='มีข้อมูลที่ยังไม่ได้บันทึก'; } });
   // drag & drop
