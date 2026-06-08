@@ -960,14 +960,22 @@ function renderScoresView() {
   document.getElementById('breadcrumb-scores').innerHTML=`<span class="breadcrumb-link" onclick="goHome()">🏠 หน้าหลัก</span><span class="breadcrumb-sep">›</span><span class="breadcrumb-link" onclick="showView('select');renderSelectView('scores')">${currentLevel==='primary'?'ประถม':'มัธยมต้น'}</span><span class="breadcrumb-sep">›</span><span class="breadcrumb-item active">${gl} — ${sl}</span>`;
   document.getElementById('scores-page-title').textContent=`📝 บันทึกคะแนน ${gl}`;
   document.getElementById('scores-page-subtitle').textContent=`${sl} | เลือกวิชาจากเมนูด้านล่างเพื่อกรอกคะแนน`;
-  // populate dropdown
-  const doneKeys = LS.getAllSubjectScoreKeys(currentLevel,currentSemester,currentGrade);
+  // เช็คว่าวิชาไหนกรอกจริงๆ (มีคะแนนอย่างน้อย 1 คน)
+  const isDone = (code) => {
+    const scores = LS.getScores(currentLevel,currentSemester,currentGrade,code);
+    return Object.values(scores).some(sc =>
+      sc && (
+        (sc.kept!==null && sc.kept!==undefined && sc.kept!=='' && !isNaN(sc.kept)) ||
+        sc.kept==='ร' || sc.kept==='มส'
+      )
+    );
+  };
   const sel = document.getElementById('subject-select');
-  const prevVal = currentSubjectCode; // ถ้า null = ไม่เลือกอะไร
+  const prevVal = currentSubjectCode;
   sel.innerHTML = '<option value="">— กรุณาเลือกวิชา —</option>' +
     subjects.map(s=>{
-      const done = doneKeys.includes(s.code);
-      return `<option value="${s.code}" ${prevVal===s.code?'selected':''}>${done?'✓ ':''}${s.name}</option>`;
+      const done = isDone(s.code);
+      return `<option value="${s.code}" ${prevVal===s.code?'selected':''}>${s.name}</option>`;
     }).join('');
   if(currentSubjectCode) renderScoreTable(currentSubjectCode);
   else document.getElementById('score-table-area').innerHTML=`<div class="empty-state"><div class="empty-icon">☝️</div><div class="empty-title">เลือกรายวิชาจากเมนูด้านบน</div><div class="empty-desc">คลิกเลือกวิชาเพื่อเริ่มกรอกคะแนน</div></div>`;
