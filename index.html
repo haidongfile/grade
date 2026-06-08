@@ -12,6 +12,20 @@
 <!-- Firebase SDK (โหลดเพื่อรองรับ config) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyB07YDdP5i7uWPqZMvfHxsFaXX5WVKLJDw",
+  authDomain: "grade-20ce9.firebaseapp.com",
+  projectId: "grade-20ce9",
+  storageBucket: "grade-20ce9.firebasestorage.app",
+  messagingSenderId: "1051283875703",
+  appId: "1:1051283875703:web:2421f9e3e9279008406372"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+window.db = db;
+window.firebaseReady = true;
+</script>
 <style>
 :root {
   --primary: #4A8FE7;
@@ -286,7 +300,7 @@ footer { text-align: center; padding: 24px; font-size: 12.5px; color: var(--text
 }
 
 /* ℹ️ banner */
-.demo-banner { background: linear-gradient(135deg, #fff8e1, #fffde7); border: 1px solid #ffe082; border-radius: var(--radius-sm); padding: 10px 16px; font-size: 13px; color: #7a6000; display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+
 </style>
 </head>
 <body>
@@ -330,7 +344,7 @@ footer { text-align: center; padding: 24px; font-size: 12.5px; color: var(--text
   <div id="app">
     <!-- HOME -->
     <div id="view-home">
-      <div class="demo-banner">💾 โหมดทดลอง — ข้อมูลเก็บในเครื่องนี้เท่านั้น (localStorage) ยังไม่ sync ข้ามอุปกรณ์</div>
+
       <div class="page-header">
         <div class="page-title">ยินดีต้อนรับ 👋</div>
         <div class="page-subtitle">เลือกระดับการศึกษาที่ต้องการบันทึกผลการเรียน</div>
@@ -422,7 +436,6 @@ footer { text-align: center; padding: 24px; font-size: 12.5px; color: var(--text
     <div class="view-mode-tabs" style="margin-bottom:20px;">
       <button class="view-mode-tab active" id="settings-tab-school" onclick="switchSettingsTab('school')">🏫 ข้อมูลโรงเรียน</button>
       <button class="view-mode-tab" id="settings-tab-import" onclick="switchSettingsTab('import')">📥 นำเข้ารายชื่อ</button>
-      <button class="view-mode-tab" id="settings-tab-firebase" onclick="switchSettingsTab('firebase')">🔥 Firebase</button>
     </div>
 
     <!-- ส่วนที่ 1: ข้อมูลโรงเรียน -->
@@ -482,44 +495,6 @@ footer { text-align: center; padding: 24px; font-size: 12.5px; color: var(--text
     </div>
 
     <!-- ส่วนที่ 3: Firebase Config -->
-    <div id="settings-firebase-section" class="hidden">
-      <div id="firebase-locked-section">
-        <div style="text-align:center;padding:24px 0;">
-          <div style="font-size:32px;margin-bottom:12px;">🔒</div>
-          <div style="font-size:14px;color:var(--text-sub);margin-bottom:16px;">ใส่รหัสแอดมินเพื่อแก้ไข Firebase Config</div>
-          <div style="display:flex;gap:8px;justify-content:center;max-width:280px;margin:0 auto;">
-            <input type="password" id="firebase-admin-input" class="form-input" placeholder="รหัสแอดมิน" style="flex:1;" />
-            <button class="btn btn-primary btn-sm" id="firebase-admin-btn">เข้าสู่ระบบ</button>
-          </div>
-          <div id="firebase-admin-error" class="error-msg" style="margin-top:8px;text-align:center;"></div>
-        </div>
-      </div>
-
-      <div id="firebase-config-section" class="hidden">
-        <div id="firebase-status-bar" style="padding:10px 14px;border-radius:var(--radius-sm);margin-bottom:16px;font-size:13px;display:flex;align-items:center;gap:8px;"></div>
-
-        <div style="font-size:13px;color:var(--text-sub);margin-bottom:8px;">
-          วางโค้ด config จาก Firebase Console ได้เลย<br/>
-          <span style="font-size:12px;color:var(--text-light);">Project Settings → Your apps → Firebase SDK snippet → Config</span>
-        </div>
-
-        <textarea id="fb-config-raw" class="bulk-textarea" style="min-height:180px;font-family:monospace;font-size:12px;line-height:1.6;" placeholder="const firebaseConfig = {
-  apiKey: &quot;AIzaSy...&quot;,
-  authDomain: &quot;xxx.firebaseapp.com&quot;,
-  projectId: &quot;my-project&quot;,
-  storageBucket: &quot;xxx.appspot.com&quot;,
-  messagingSenderId: &quot;123456789&quot;,
-  appId: &quot;1:xxx:web:xxx&quot;
-};"></textarea>
-
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
-          <button class="btn btn-outline btn-sm" onclick="testFirebaseConnection()">🔍 ทดสอบการเชื่อมต่อ</button>
-          <button class="btn btn-primary btn-sm" onclick="saveFirebaseConfig()">💾 บันทึก Config</button>
-          <button class="btn btn-danger btn-sm" onclick="clearFirebaseConfig()">🗑️ ล้าง Config</button>
-        </div>
-        <div id="firebase-test-result" style="margin-top:12px;font-size:13px;"></div>
-      </div>
-    </div>
 
     <div style="display:flex;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--border-light);">
       <button class="btn btn-outline" onclick="closeSchoolSettings()">ปิด</button>
@@ -533,29 +508,63 @@ const SPECIAL_PREFIXES = ['พ','ศ','ง'];
 
 // ===================== SCHOOL SETTINGS TABS =====================
 function switchSettingsTab(tab){
-  ['school','import','firebase'].forEach(t=>{
+  ['school','import'].forEach(t=>{
     document.getElementById(`settings-tab-${t}`)?.classList.toggle('active', t===tab);
     document.getElementById(`settings-${t}-section`)?.classList.toggle('hidden', t!==tab);
   });
-  // reset firebase lock ทุกครั้งที่เปิดแท็บ
-  if(tab==='firebase'){
-    document.getElementById('firebase-admin-input').value='';
-    document.getElementById('firebase-admin-error').classList.remove('show');
-    // ถ้ามี config อยู่แล้วให้แสดงเลย ไม่ต้องล็อก
-    const saved = getSavedFirebaseConfig();
-    if(saved){
-      unlockFirebaseSection();
-      populateFirebaseFields(saved);
-      updateFirebaseStatusBar();
-    } else {
-      document.getElementById('firebase-locked-section').classList.remove('hidden');
-      document.getElementById('firebase-config-section').classList.add('hidden');
-    }
-  }
 }
 
 // ===================== FIREBASE SETTINGS =====================
 const FIREBASE_ADMIN_PASSWORD = '1234';
+
+function verifyFirebaseAdmin(){
+  const val = document.getElementById('firebase-admin-input').value;
+  const errEl = document.getElementById('firebase-admin-error');
+  if(val === FIREBASE_ADMIN_PASSWORD){
+    unlockFirebaseSection();
+    populateFirebaseFields(getSavedFirebaseConfig());
+    updateFirebaseStatusBar();
+  } else {
+    errEl.textContent='รหัสไม่ถูกต้อง';
+    errEl.classList.add('show');
+  }
+}
+
+function updateFirebaseStatusBar(){
+  const bar = document.getElementById('firebase-status-bar');
+  if(!bar) return;
+  const cfg = getSavedFirebaseConfig();
+  if(cfg && window.firebaseReady){
+    bar.style.cssText='background:var(--success-soft);color:#2a7a4a;border:1px solid #a8e6c1;padding:10px 14px;border-radius:var(--radius-sm);margin-bottom:16px;font-size:13px;display:flex;align-items:center;gap:8px;';
+    bar.innerHTML=`✅ เชื่อมต่อ Firebase แล้ว — <strong>${cfg.projectId}</strong>`;
+  } else if(cfg){
+    bar.style.cssText='background:var(--warning-soft);color:#7a5a00;border:1px solid #ffe082;padding:10px 14px;border-radius:var(--radius-sm);margin-bottom:16px;font-size:13px;display:flex;align-items:center;gap:8px;';
+    bar.innerHTML=`⚠️ มี Config แต่ยังไม่ได้เชื่อมต่อ — <strong>${cfg.projectId}</strong>`;
+  } else {
+    bar.style.cssText='background:var(--bg-soft);color:var(--text-sub);border:1px solid var(--border);padding:10px 14px;border-radius:var(--radius-sm);margin-bottom:16px;font-size:13px;display:flex;align-items:center;gap:8px;';
+    bar.innerHTML=`💾 ใช้งาน localStorage (โหมดทดลอง)`;
+  }
+}
+
+async function testFirebaseConnection(){
+  const cfg = getFirebaseFieldValues();
+  const resultEl = document.getElementById('firebase-test-result');
+  if(!cfg.apiKey||!cfg.projectId){ resultEl.innerHTML=`<span style="color:var(--danger)">❌ กรุณากรอก API Key และ Project ID</span>`; return; }
+  resultEl.innerHTML=`<span style="color:var(--text-sub)">⏳ กำลังทดสอบ...</span>`;
+  try {
+    const res = await fetch(`https://firestore.googleapis.com/v1/projects/${cfg.projectId}/databases/(default)/documents`,{
+      headers:{'x-goog-api-key': cfg.apiKey}
+    });
+    if(res.ok||res.status===200||res.status===404){
+      resultEl.innerHTML=`<span style="color:var(--success)">✅ เชื่อมต่อสำเร็จ! Project: <strong>${cfg.projectId}</strong></span>`;
+    } else {
+      const err = await res.json().catch(()=>({}));
+      resultEl.innerHTML=`<span style="color:var(--danger)">❌ ไม่สำเร็จ: ${err?.error?.message||res.status}</span>`;
+    }
+  } catch(e){
+    resultEl.innerHTML=`<span style="color:var(--danger)">❌ เชื่อมต่อไม่ได้: ${e.message}</span>`;
+  }
+}
 
 function getSavedFirebaseConfig(){
   try { return JSON.parse(localStorage.getItem('firebase_config')); } catch { return null; }
@@ -589,42 +598,22 @@ function getFirebaseFieldValues(){
   };
 }
 
-async function testFirebaseConnection(){
-  const cfg = getFirebaseFieldValues();
-  const resultEl = document.getElementById('firebase-test-result');
-  if(!cfg.apiKey||!cfg.projectId){ resultEl.innerHTML=`<span style="color:var(--danger)">❌ กรุณากรอก API Key และ Project ID</span>`; return; }
-  resultEl.innerHTML=`<span style="color:var(--text-sub)">⏳ กำลังทดสอบ...</span>`;
-  try {
-    const res = await fetch(`https://firestore.googleapis.com/v1/projects/${cfg.projectId}/databases/(default)/documents`, {
-      headers: { 'x-goog-api-key': cfg.apiKey }
-    });
-    if(res.ok || res.status===200 || res.status===404){
-      resultEl.innerHTML=`<span style="color:var(--success)">✅ เชื่อมต่อสำเร็จ! Project: <strong>${cfg.projectId}</strong></span>`;
-    } else {
-      const err = await res.json().catch(()=>({}));
-      resultEl.innerHTML=`<span style="color:var(--danger)">❌ ไม่สำเร็จ: ${err?.error?.message||res.status}</span>`;
-    }
-  } catch(e){
-    resultEl.innerHTML=`<span style="color:var(--danger)">❌ เชื่อมต่อไม่ได้: ${e.message}</span>`;
-  }
-}
-
 function saveFirebaseConfig(){
   const cfg = getFirebaseFieldValues();
-  if(!cfg.apiKey||!cfg.projectId){ showToast('❌','กรุณากรอกข้อมูลให้ครบ','อย่างน้อย API Key และ Project ID'); return; }
+  if(!cfg.apiKey||!cfg.projectId){ showToast('❌','กรุณากรอกข้อมูลให้ครบ','ต้องมีอย่างน้อย API Key และ Project ID'); return; }
   localStorage.setItem('firebase_config', JSON.stringify(cfg));
-  // init firebase
+  if(typeof firebase === 'undefined'){
+    showToast('⚠️','บันทึกแล้ว แต่ SDK ยังโหลดไม่เสร็จ','รีเฟรชหน้าเพื่อเชื่อมต่อ Firebase');
+    return;
+  }
   try {
-    if(window.firebase){
-      // ถ้า app มีอยู่แล้วให้ลบก่อน
-      const apps = firebase.apps;
-      if(apps.length>0) apps.forEach(a=>a.delete());
-      firebase.initializeApp(cfg);
-      window.db = firebase.firestore();
-      window.firebaseReady = true;
-    }
+    if(firebase.apps.length) firebase.apps.forEach(a => a.delete());
+    firebase.initializeApp(cfg);
+    window.db = firebase.firestore();
+    window.firebaseReady = true;
   } catch(e){ console.warn('Firebase init error:', e); }
   updateFirebaseStatusBar();
+  updateSchoolUI();
   showToast('✅','บันทึก Firebase Config แล้ว',`Project: ${cfg.projectId}`);
 }
 
@@ -641,15 +630,7 @@ function clearFirebaseConfig(){
 
 // init Firebase จาก saved config ตอนโหลดหน้า
 function initFirebaseFromSaved(){
-  const cfg = getSavedFirebaseConfig();
-  if(!cfg||!cfg.apiKey) return;
-  try {
-    if(window.firebase){
-      if(!firebase.apps.length) firebase.initializeApp(cfg);
-      window.db = firebase.firestore();
-      window.firebaseReady = true;
-    }
-  } catch(e){ console.warn('Firebase auto-init error:', e); }
+  // Firebase init ตรงใน <head> แล้ว ไม่ต้องทำอะไรเพิ่ม
 }
 function getSchoolInfo() {
   return {
@@ -659,13 +640,11 @@ function getSchoolInfo() {
 }
 function updateSchoolUI() {
   const {name, year} = getSchoolInfo();
-  const display = name || 'ระบบบันทึกผลการเรียน';
-  // login subtitle
   const sub = document.getElementById('login-school-sub');
   if(sub) sub.textContent = name || 'ระบบบันทึกผลการเรียน';
-  // footer
   const footer = document.getElementById('app-footer');
   if(footer) footer.textContent = name ? `${name}${year?' ปีการศึกษา '+year:''}` : 'ระบบบันทึกผลการเรียน';
+
 }
 function showSchoolSettings() {
   const {name, year} = getSchoolInfo();
@@ -796,8 +775,6 @@ document.addEventListener('DOMContentLoaded', () => {
   updateSchoolUI();
   initFirebaseFromSaved();
   document.getElementById('login-input').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-  document.getElementById('firebase-admin-input').addEventListener('keydown', e => { if(e.key==='Enter') verifyFirebaseAdmin(); });
-  document.getElementById('firebase-admin-btn').addEventListener('click', () => verifyFirebaseAdmin());
   if (checkSession()) showApp();
   window.addEventListener('beforeunload', e => { if(isDirty){ e.preventDefault(); e.returnValue='มีข้อมูลที่ยังไม่ได้บันทึก'; } });
   // drag & drop
