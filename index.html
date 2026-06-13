@@ -1928,16 +1928,19 @@ let sumLevel=null, sumSemester=null, sumGrade=null;
 function getPrimaryAvgScore(grade, subjectCode, studentIdx) {
   const mid = LS.getScores('primary','midyear',grade,subjectCode)[studentIdx]||{};
   const end = LS.getScores('primary','endyear',grade,subjectCode)[studentIdx]||{};
-  const midTotal = mid.kept!=null&&mid.exam!=null ? mid.kept+mid.exam : null;
-  const endTotal = end.kept!=null&&end.exam!=null ? end.kept+end.exam : null;
-  if(midTotal==null&&endTotal==null) return {midKept:null,midExam:null,midTotal:null,endKept:null,endExam:null,endTotal:null,avg:null,grade:null};
-  const avg = (midTotal!=null&&endTotal!=null) ? (midTotal+endTotal)/2 : (midTotal??endTotal);
-  return {
-    midKept:mid.kept??null, midExam:mid.exam??null, midTotal,
-    endKept:end.kept??null, endExam:end.exam??null, endTotal,
-    avg: Math.round(avg*100)/100,
-    grade: calculateGrade(avg)
-  };
+  const midKept = mid.kept ?? null, midExam = mid.exam ?? null;
+  const endKept = end.kept ?? null, endExam = end.exam ?? null;
+  // คะแนนรวมคำนวณได้เฉพาะเมื่อทั้งเก็บและสอบเป็นตัวเลข
+  const midTotal = (typeof midKept==='number' && typeof midExam==='number') ? midKept+midExam : null;
+  const endTotal = (typeof endKept==='number' && typeof endExam==='number') ? endKept+endExam : null;
+  let avg=null, grade2=null;
+  if(midTotal!=null || endTotal!=null){
+    avg = (midTotal!=null&&endTotal!=null) ? (midTotal+endTotal)/2 : (midTotal??endTotal);
+    avg = Math.round(avg*100)/100;
+    grade2 = calculateGrade(avg);
+  }
+  // ยังคงแสดงคะแนนเก็บ/สอบที่กรอกไปแล้วเสมอ แม้คำนวณรวมยังไม่ได้
+  return { midKept, midExam, midTotal, endKept, endExam, endTotal, avg, grade: grade2 };
 }
 
 // helper: ดึงคะแนนมัธยม (แยกตามภาคเรียน)
