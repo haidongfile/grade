@@ -427,8 +427,76 @@ tr.row-warn td:first-child { box-shadow: inset 3px 0 0 var(--warning); }
 .data-group.data-danger { border-color: var(--danger); background: #fff8f8; }
 .data-group-title { font-family: var(--font-display); font-size: 1em; color: var(--text-main); margin-bottom: 6px; }
 .data-group-desc { font-size: 0.82em; color: var(--text-sub); line-height: 1.7; margin-bottom: 12px; }
+.locked-pill { display: inline-flex; align-items: center; padding: 7px 14px; border-radius: var(--radius-xs); background: var(--bg-soft); color: var(--primary-dark); font-size: 13px; font-weight: 600; }
+.te-hr-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 6px 0; }
+.te-hr-lbl { font-size: 0.82em; color: var(--text-light); min-width: 46px; }
+.te-hr-item { font-size: 0.85em; }
+.tm-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.tm-badge { font-size: 0.72em; border-radius: 99px; padding: 2px 9px; font-weight: 600; }
+.tm-badge.tm-hr { background: var(--accent-soft); color: #B23A6A; }
+.tm-badge.tm-pin { background: var(--bg-soft); color: var(--primary-dark); }
 @media (max-width: 600px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .te-subj { flex-basis: 100%; } }
 
+/* ===== HOMEWORK (บันทึกการส่งงาน) ===== */
+.hw-task-list { display: flex; flex-direction: column; gap: 8px; }
+.hw-task-row { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--border-light); border-radius: var(--radius-sm); background: var(--bg); }
+.hw-task-tag { font-size: 0.72em; border-radius: 99px; padding: 2px 9px; font-weight: 600; margin-right: 8px; white-space: nowrap; }
+.hw-task-tag.h { background: var(--bg-soft); color: var(--primary-dark); }
+.hw-task-tag.q { background: #efe8ff; color: #6b4fd0; }
+.hw-task-name { font-weight: 600; }
+.hw-task-meta { font-size: 0.78em; color: var(--text-light); margin-left: 8px; }
+.hw-editor { margin-top: 14px; }
+.hw-editor-title { font-family: var(--font-display); font-size: 1.05em; margin-bottom: 12px; }
+.hw-grid-note { font-size: 0.8em; color: var(--text-sub); background: var(--bg); border-radius: var(--radius-sm); padding: 8px 12px; margin-bottom: 10px; }
+.bulk-btns { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.btn-bulk { padding: 7px 16px; border-radius: 99px; border: none; cursor: pointer; font-family: var(--font-body); font-size: 0.85em; transition: transform .15s; }
+.btn-bulk:hover { transform: scale(1.04); }
+.btn-bulk.all-submit { background: var(--success-soft); color: #2a7a4a; }
+.btn-bulk.all-not { background: var(--danger-soft); color: var(--danger); }
+.btn-bulk.all-clear { background: #eee; color: #777; }
+.hw-srow { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: var(--radius-sm); margin-bottom: 6px; background: var(--bg); flex-wrap: wrap; }
+.hw-srow:hover { background: var(--bg-soft); }
+.hw-snum { font-size: 0.8em; color: var(--text-light); min-width: 22px; }
+.hw-sname { flex: 1; font-size: 0.92em; min-width: 120px; }
+.hw-sbtns { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.btn-submit-s, .btn-notsubmit-s { border: 2px solid transparent; border-radius: 20px; padding: 6px 14px; cursor: pointer; font-family: var(--font-body); font-size: 0.84em; transition: all .2s; opacity: .4; }
+.btn-submit-s { background: var(--success); color: #fff; }
+.btn-submit-s:hover { opacity: .7; }
+.btn-submit-s.active { opacity: 1; box-shadow: 0 0 0 3px var(--success-soft); transform: scale(1.04); }
+.btn-notsubmit-s { background: var(--danger); color: #fff; }
+.btn-notsubmit-s:hover { opacity: .7; }
+.btn-notsubmit-s.active { opacity: 1; box-shadow: 0 0 0 3px var(--danger-soft); transform: scale(1.04); }
+.btn-clear-s { background: #ececec; color: #999; border: none; border-radius: 20px; padding: 6px 12px; cursor: pointer; font-family: var(--font-body); }
+.hw-qscore { width: 90px; border: 1.5px solid var(--border); border-radius: 8px; padding: 5px 10px; font-family: var(--font-body); }
+.hw-table-wrap { overflow-x: auto; }
+.hw-table { border-collapse: collapse; width: 100%; font-size: 0.86em; }
+.hw-table th { background: var(--bg-soft); padding: 8px 10px; text-align: center; border: 1px solid var(--border-light); white-space: nowrap; font-weight: 600; }
+.hw-table td { padding: 7px 10px; text-align: center; border: 1px solid var(--border-light); }
+.hw-table th.hw-name-th, .hw-table td.hw-name-col { position: sticky; left: 0; background: #fff; text-align: left; white-space: nowrap; box-shadow: 2px 0 4px rgba(0,0,0,0.04); }
+.hw-table th.hw-name-th { background: var(--bg-soft); }
+.hw-table .hw-total { font-weight: 700; color: var(--primary-dark); background: var(--bg-soft); }
+.ic-submit, .ic-not { display: inline-block; width: 16px; height: 16px; border-radius: 50%; vertical-align: middle; }
+.ic-submit { background: var(--success); }
+.ic-not { background: var(--danger); }
+.hw-miss { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg); border-radius: var(--radius-sm); margin-bottom: 6px; }
+.hw-miss-c { background: var(--danger-soft); color: var(--danger); border-radius: 99px; padding: 2px 12px; font-size: 0.82em; font-weight: 600; }
+/* grade page: homework-locked kept + add panel */
+.hw-auto-banner, .hw-off-banner { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 10px; padding: 8px 12px; border-radius: var(--radius-sm); font-size: 0.85em; }
+.hw-auto-banner { background: var(--success-soft); }
+.hw-auto-on { color: #2a7a4a; font-weight: 600; }
+.hw-off-banner { background: var(--warning-soft); }
+.hw-off-note { font-size: 0.92em; color: var(--text-sub); }
+.hw-add-panel { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 10px; padding: 10px 12px; background: var(--bg); border: 1px dashed var(--border); border-radius: var(--radius-sm); }
+.hw-add-title { font-weight: 600; color: var(--primary-dark); font-size: 0.88em; }
+.hw-add-bulk { display: flex; align-items: center; gap: 6px; font-size: 0.85em; }
+.hw-add-bulk input { border: 1.5px solid var(--border); border-radius: 8px; padding: 5px 8px; font-family: var(--font-body); }
+.hw-kept { font-weight: 700; color: var(--primary-dark); }
+.hw-kept.capped { color: var(--danger); }
+.hw-kept-hint { display: block; font-size: 0.72em; color: var(--text-light); font-weight: 400; }
+.hw-adj-mini { display: inline-flex; align-items: center; gap: 6px; }
+.hw-adj-mini button { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--border); background: #fff; cursor: pointer; font-weight: 700; color: var(--primary); }
+.hw-adj-mini button:hover { background: var(--bg-soft); }
+.hw-special-sel { border: 1px solid var(--border); border-radius: 8px; padding: 4px 6px; font-family: var(--font-body); font-size: 0.82em; background: #fff; }
 </style>
 </head>
 <body>
@@ -444,6 +512,7 @@ tr.row-warn td:first-child { box-shadow: inset 3px 0 0 var(--warning); }
     <div class="topbar-brand"><span>🏫</span><span>ระบบบันทึกผลการเรียน</span></div>
     <div class="topbar-nav">
       <button class="nav-btn active" id="nav-home" onclick="goHome()">🏠 หน้าหลัก</button>
+      <button class="nav-btn" id="nav-homework" onclick="navigateTo('homework')">📨 บันทึกการส่งงาน</button>
       <button class="nav-btn" id="nav-summary" onclick="navigateTo('summary')">📋 สรุปผลการเรียน</button>
       <button class="nav-btn" id="nav-progress" onclick="navigateTo('progress')">📈 ความคืบหน้า</button>
       <div class="nav-divider"></div>
@@ -461,6 +530,7 @@ tr.row-warn td:first-child { box-shadow: inset 3px 0 0 var(--warning); }
   <div id="mobile-nav">
     <span id="topbar-identity-mobile" style="padding:6px 14px;"></span>
     <button class="nav-btn" onclick="goHome();closeMobileNav()">🏠 หน้าหลัก</button>
+    <button class="nav-btn" onclick="navigateTo('homework');closeMobileNav()">📨 บันทึกการส่งงาน</button>
     <button class="nav-btn" onclick="navigateTo('summary');closeMobileNav()">📋 สรุปผลการเรียน</button>
     <button class="nav-btn" onclick="navigateTo('progress');closeMobileNav()">📈 ความคืบหน้า</button>
     <button class="nav-btn admin-only" onclick="showSchoolSettings();closeMobileNav()">⚙️ ตั้งค่า</button>
@@ -528,6 +598,7 @@ tr.row-warn td:first-child { box-shadow: inset 3px 0 0 var(--warning); }
     <div id="view-summary" class="hidden">
       <div class="breadcrumb" id="breadcrumb-summary"></div>
       <div class="page-header"><div class="page-title">📋 สรุปผลการเรียน</div></div>
+      <div id="summary-mode-bar" class="no-print"></div>
       <div id="summary-content"></div>
     </div>
     <!-- PROGRESS -->
@@ -537,6 +608,17 @@ tr.row-warn td:first-child { box-shadow: inset 3px 0 0 var(--warning); }
         <div class="page-subtitle">ภาพรวมการกรอกข้อมูลทุกชั้นเรียน</div>
       </div>
       <div id="progress-content"></div>
+    </div>
+
+    <!-- HOMEWORK (บันทึกการส่งงาน) -->
+    <div id="view-homework" class="hidden">
+      <div class="breadcrumb" id="breadcrumb-homework"></div>
+      <div class="page-header">
+        <div class="page-title">📨 บันทึกการส่งงาน</div>
+        <div class="page-subtitle">บันทึกชิ้นงาน/สอบย่อย แล้วระบบคิดเป็นคะแนนเก็บให้อัตโนมัติ</div>
+      </div>
+      <div id="hw-controls" class="scores-controls no-print"></div>
+      <div id="hw-content"></div>
     </div>
   </div>
   <footer id="app-footer">ระบบบันทึกผลการเรียน</footer>
@@ -685,11 +767,14 @@ function renderTeacherManager(){
   const list = TEACHERS.length
     ? TEACHERS.map(t=>{
         const pCount=getTeacherGrades(t,'primary').length, sCount=getTeacherGrades(t,'secondary').length;
+        const hr=(Array.isArray(t.homeroom)?t.homeroom:[]).map(g=>getGradeLabel(g.charAt(0)==='p'?'primary':'secondary',g));
         const meta=[pCount?`ประถม ${pCount} ชั้น`:'', sCount?`มัธยม ${sCount} ชั้น`:''].filter(Boolean).join(' • ')||'ยังไม่ได้กำหนดวิชา';
+        const badges=`${hr.length?`<span class="tm-badge tm-hr">🏫 ประจำชั้น ${hr.join(', ')}</span>`:''}${t.pin?`<span class="tm-badge tm-pin">🔑 รหัสเฉพาะ</span>`:''}`;
         return `<div class="tm-row">
           <div class="tm-row-main" onclick="editTeacher('${t.id}')">
             <div class="tm-name">${teacherEmoji(t.name)} ${t.name}</div>
             <div class="tm-meta">${meta}</div>
+            ${badges?`<div class="tm-badges">${badges}</div>`:''}
           </div>
           <button class="btn btn-outline btn-sm" onclick="editTeacher('${t.id}')">แก้ไข</button>
           <button class="icon-btn-danger" title="ลบ" onclick="deleteTeacher('${t.id}')">🗑️</button>
@@ -727,11 +812,17 @@ async function deleteTeacher(id){
 function teacherEditorHTML(t){
   const hasP = getTeacherGrades(t,'primary').length>0 || t._openPrimary;
   const hasS = getTeacherGrades(t,'secondary').length>0 || t._openSecondary;
+  const hr = Array.isArray(t.homeroom)?t.homeroom:[];
+  const hrChk = (level,g)=>`<label class="te-check te-hr-item"><input type="checkbox" ${hr.includes(g)?'checked':''} onchange="toggleHomeroom('${g}',this.checked)"/> ${getGradeLabel(level,g)}</label>`;
   return `
     <button class="login-back" style="position:static;margin-bottom:10px;" onclick="cancelTeacherEdit()">‹ กลับไปที่รายชื่อ</button>
     <div class="form-group">
       <label class="form-label">ชื่อครู</label>
-      <input type="text" id="te-name" class="form-input" placeholder="เช่น ครูมิน หรือ นางสาว..." value="${(t.name||'').replace(/"/g,'&quot;')}" oninput="editingTeacher.name=this.value" />
+      <input type="text" id="te-name" class="form-input" placeholder="เช่น นางสาวกัญญา ... (มีคำนำหน้าจะได้อีโมจิตรงเพศ)" value="${(t.name||'').replace(/"/g,'&quot;')}" oninput="editingTeacher.name=this.value" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">รหัสผ่านของครูคนนี้ (ไม่บังคับ)</label>
+      <input type="text" id="te-pin" class="form-input" placeholder="เว้นว่าง = ใช้รหัสรวม ${TEACHER_PASSWORD}" value="${(t.pin||'').replace(/"/g,'&quot;')}" oninput="editingTeacher.pin=this.value" />
     </div>
     <div class="form-label">ระดับที่สอน</div>
     <div class="te-level-toggle">
@@ -740,6 +831,11 @@ function teacherEditorHTML(t){
     </div>
     ${hasP?teacherLevelBlock(t,'primary'):''}
     ${hasS?teacherLevelBlock(t,'secondary'):''}
+    <div class="te-block">
+      <div class="te-block-title">🏫 เป็นครูประจำชั้นของ (ดู/พิมพ์สรุปทั้งห้องได้ ไม่รวมการแก้คะแนน)</div>
+      <div class="te-hr-row"><span class="te-hr-lbl">ประถม</span>${['p1','p2','p3','p4','p5','p6'].map(g=>hrChk('primary',g)).join('')}</div>
+      <div class="te-hr-row"><span class="te-hr-lbl">มัธยม</span>${['m1','m2','m3'].map(g=>hrChk('secondary',g)).join('')}</div>
+    </div>
     <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:18px;padding-top:14px;border-top:1px solid var(--border-light);">
       <button class="btn btn-outline btn-sm" onclick="cancelTeacherEdit()">ยกเลิก</button>
       <button class="btn btn-success btn-sm" onclick="saveTeacherEdit()">💾 บันทึก</button>
@@ -802,13 +898,20 @@ function toggleTeacherSubject(g, code, on){
   editingTeacher.assignments[g] = arr;
   renderTeacherManager();
 }
+function toggleHomeroom(g, on){
+  let arr = Array.isArray(editingTeacher.homeroom)?editingTeacher.homeroom:[];
+  if(on){ if(!arr.includes(g)) arr.push(g); } else { arr = arr.filter(x=>x!==g); }
+  editingTeacher.homeroom = arr;
+  renderTeacherManager();
+}
 function cancelTeacherEdit(){ editingTeacher=null; renderTeacherManager(); }
 async function saveTeacherEdit(){
   const t = editingTeacher;
   if(!t.name || !t.name.trim()){ showToast('⚠️','กรุณากรอกชื่อครู',''); return; }
-  // ลบชั้นที่ไม่มีวิชา และ field ชั่วคราว
   const clean = { id:t.id, name:t.name.trim(), assignments:{} };
   for(const [g,arr] of Object.entries(t.assignments||{})){ if(arr && arr.length) clean.assignments[g]=arr; }
+  if(t.pin && t.pin.trim()) clean.pin = t.pin.trim();
+  if(Array.isArray(t.homeroom) && t.homeroom.length) clean.homeroom = t.homeroom;
   const idx = TEACHERS.findIndex(x=>x.id===t.id);
   if(idx>=0) TEACHERS[idx]=clean; else TEACHERS.push(clean);
   await saveTeachers();
@@ -1064,6 +1167,28 @@ const LS = {
     try { return JSON.parse(localStorage.getItem(ck))||{}; } catch { return {}; }
   },
 
+  // ===== การส่งงาน (แยกตามภาคเรียน) — { tasks:[], autoOff:false, adj:{idx:number} } =====
+  async saveTaskData(level, semester, grade, subjectCode, data) {
+    const ck = this._ck('tk',level,semester,grade,subjectCode);
+    this._cache[ck] = data;
+    localStorage.setItem(ck, JSON.stringify(data));
+    if(window.firebaseReady && window.db){
+      try {
+        await window.db.collection('tasks').doc(`${level}_${semester}`)
+          .collection(grade).doc(subjectCode)
+          .set({ data, updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+      } catch(e){ console.warn('saveTaskData error:',e); }
+    }
+  },
+  getTaskData(level, semester, grade, subjectCode) {
+    const ck = this._ck('tk',level,semester,grade,subjectCode);
+    let d;
+    if(this._cache[ck] !== undefined) d = this._cache[ck];
+    else { try { d = JSON.parse(localStorage.getItem(ck)); } catch { d = null; } }
+    if(!d || typeof d!=='object') d = {};
+    return { tasks: Array.isArray(d.tasks)?d.tasks:[], autoOff: !!d.autoOff, adj: d.adj||{} };
+  },
+
   getAllSubjectScoreKeys(level, semester, grade) {
     const pre = this._ck('sc',level,semester,grade,'');
     const keys = new Set();
@@ -1106,6 +1231,18 @@ const LS = {
                 snap.forEach(doc=>{
                   const data=doc.data().data||{};
                   const ck=this._ck('sc',level,sem,grade,doc.id);
+                  this._cache[ck]=data;
+                  localStorage.setItem(ck,JSON.stringify(data));
+                });
+              }).catch(()=>{})
+          );
+          promises.push(
+            window.db.collection('tasks').doc(`${level}_${sem}`)
+              .collection(grade).get()
+              .then(snap=>{
+                snap.forEach(doc=>{
+                  const data=doc.data().data||{};
+                  const ck=this._ck('tk',level,sem,grade,doc.id);
                   this._cache[ck]=data;
                   localStorage.setItem(ck,JSON.stringify(data));
                 });
@@ -1218,8 +1355,10 @@ function submitLogin(){
     if(val === ADMIN_PASSWORD){ currentRole='admin'; currentTeacher=null; saveSession(); enterApp(); }
     else showLoginError(input, errEl, 'รหัสผ่านไม่ถูกต้อง');
   } else {
-    if(val === TEACHER_PASSWORD){
-      currentRole='teacher'; currentTeacher = getTeacherById(loginPickedTeacherId);
+    const tt = getTeacherById(loginPickedTeacherId);
+    const expected = (tt && tt.pin) ? tt.pin : TEACHER_PASSWORD;
+    if(val === expected){
+      currentRole='teacher'; currentTeacher = tt;
       saveSession(); enterApp();
     } else showLoginError(input, errEl, 'รหัสผ่านไม่ถูกต้อง');
   }
@@ -1392,11 +1531,11 @@ let currentLevel=null, currentSemester=null, currentGrade=null, currentSubjectCo
 let isDirty=false, pendingImportData=null, confirmCb=null;
 
 // ===================== VIEWS =====================
-const VIEWS = ['home','select','scores','summary','progress'];
+const VIEWS = ['home','select','scores','summary','progress','homework'];
 function showView(name) {
   VIEWS.forEach(v => document.getElementById('view-'+v).classList.toggle('hidden', v!==name));
   document.querySelectorAll('.nav-btn[id^=nav-]').forEach(b=>b.classList.remove('active'));
-  const m={home:'nav-home',scores:'nav-scores',summary:'nav-summary',progress:'nav-progress'};
+  const m={home:'nav-home',scores:'nav-scores',summary:'nav-summary',progress:'nav-progress',homework:'nav-homework'};
   if(m[name]) document.getElementById(m[name])?.classList.add('active');
 }
 
@@ -1461,7 +1600,13 @@ function openTeacherSubject(level, grade, code){
 }function navigateTo(section) {
   if(isDirty){ showUnsavedWarning(()=>{ isDirty=false; navigateTo(section); }); return; }
   if(section==='progress'){ showView('progress'); renderProgress(); return; }
-  if(section==='summary'){ showView('summary'); if(isAdmin()) renderSummary(); else renderTeacherSummary(); return; }
+  if(section==='homework'){ showView('homework'); renderHomework(); return; }
+  if(section==='summary'){
+    showView('summary');
+    if(isAdmin()){ summaryLock=null; const mb=document.getElementById('summary-mode-bar'); if(mb) mb.innerHTML=''; renderSummary(); }
+    else renderTeacherSummaryArea();
+    return;
+  }
   if(section==='scores'){
     if(currentLevel&&currentSemester&&currentGrade){ showView('scores'); renderScoresView(); return; }
     goHome(); return;
@@ -1531,6 +1676,326 @@ function subjectStatus(level, semester, grade, code){
 
 function getScoreGrades(){ return isAdmin() ? (currentLevel==='primary'?['p1','p2','p3','p4','p5','p6']:['m1','m2','m3']) : getTeacherGrades(currentTeacher, currentLevel); }
 function getScoreSubjects(){ return isAdmin() ? getSubjects(currentLevel,currentSemester,currentGrade) : resolveTeacherSubjects(currentTeacher,currentLevel,currentSemester,currentGrade); }
+
+// ===================== SUBMISSION SCORING (การส่งงาน → คะแนนเก็บ) =====================
+// คืน array คะแนนฐานต่อ "เลขที่นักเรียน" ตามสูตร: ชิ้นงานคิดสัดส่วน + สอบย่อยคะแนนดิบสะสม
+function computeSubmissionScores(level, semester, grade, subjectCode){
+  const subj = getSubjects(level,semester,grade).find(s=>s.code===subjectCode);
+  if(!subj) return null;
+  const td = LS.getTaskData(level,semester,grade,subjectCode);
+  if(!td.tasks.length) return null;
+  const {kept:maxKept} = getMaxScores(subjectCode, subj.name);
+  const students = LS.getStudents(level,semester,grade);
+  const quizTasks = td.tasks.filter(t=>t.isQuiz);
+  const hwTasks   = td.tasks.filter(t=>!t.isQuiz);
+  const totalQuizMax = quizTasks.reduce((s,t)=>s+(Number(t.quizMax)||0),0);
+  const hwMax = Math.max(0, maxKept - totalQuizMax);
+  const hwTotal = hwTasks.length;
+  return students.map((_,i)=>{
+    const sub = hwTasks.filter(t=> (t.statuses && t.statuses[i] && (t.statuses[i].status||t.statuses[i])==='submit') ).length;
+    const hwScore = hwTotal>0 ? Math.round(sub/hwTotal*hwMax) : 0;
+    let quizTotal = 0;
+    quizTasks.forEach(t=>{ const sv=t.statuses && t.statuses[i]; if(sv && sv.status==='scored' && sv.score!=null) quizTotal += (parseFloat(sv.score)||0); });
+    return hwScore + quizTotal;
+  });
+}
+// วิชานี้ใช้คะแนนจากการส่งงานอัตโนมัติอยู่ไหม (มีชิ้นงาน และไม่ได้ติ๊กปิด)
+function homeworkActive(level, semester, grade, subjectCode){
+  const td = LS.getTaskData(level,semester,grade,subjectCode);
+  return td.tasks.length>0 && !td.autoOff;
+}
+function homeworkExists(level, semester, grade, subjectCode){
+  return LS.getTaskData(level,semester,grade,subjectCode).tasks.length>0;
+}
+// คะแนนเก็บสุดท้าย (ฐานจากส่งงาน + ที่บวกเพิ่ม) ตันที่เพดาน — คืน {value, base, adj, capped}
+function materializedKept(level, semester, grade, subjectCode, idx, maxKept){
+  const base = computeSubmissionScores(level,semester,grade,subjectCode);
+  const td = LS.getTaskData(level,semester,grade,subjectCode);
+  const b = base ? (base[idx]||0) : 0;
+  const a = Number(td.adj?.[idx])||0;
+  let v = b + a; let capped=false;
+  if(v>maxKept){ v=maxKept; capped=true; }
+  if(v<0){ v=0; }
+  return { value:v, base:b, adj:a, capped };
+}
+// ===================== HOMEWORK MENU (บันทึกการส่งงาน) =====================
+let hwLevel=null, hwSemester=null, hwGrade=null, hwSubject=null;
+let hwMode='record';      // 'record' | 'summary'
+let hwEditing=null;       // working task object (new or editing)
+
+function hwAvailLevels(){ return isAdmin()?['primary','secondary']:['primary','secondary'].filter(l=>teacherTeachesLevel(currentTeacher,l)); }
+function hwAvailGrades(){ return isAdmin()?(hwLevel==='primary'?['p1','p2','p3','p4','p5','p6']:['m1','m2','m3']):getTeacherGrades(currentTeacher,hwLevel); }
+function hwAvailSubjects(){ return isAdmin()?getSubjects(hwLevel,hwSemester,hwGrade):resolveTeacherSubjects(currentTeacher,hwLevel,hwSemester,hwGrade); }
+
+function renderHomework(){
+  document.getElementById('breadcrumb-homework').innerHTML=`<span class="breadcrumb-link" onclick="goHome()">🏠 ${isAdmin()?'หน้าหลัก':'วิชาที่ฉันสอน'}</span><span class="breadcrumb-sep">›</span><span class="breadcrumb-item active">บันทึกการส่งงาน</span>`;
+  const levels=hwAvailLevels();
+  if(levels.length===0){ document.getElementById('hw-controls').innerHTML=''; document.getElementById('hw-content').innerHTML=emptyCard('📭','ยังไม่มีวิชา','คุณยังไม่ได้รับมอบหมายวิชา'); return; }
+  if(!levels.includes(hwLevel)) hwLevel=levels[0];
+  const valid = hwLevel==='primary'?['midyear','endyear']:['term1','term2'];
+  if(!valid.includes(hwSemester)) hwSemester=valid[0];
+  const grades=hwAvailGrades();
+  if(!grades.includes(hwGrade)) hwGrade=grades[0]||null;
+  const subjects=hwAvailSubjects();
+  if(hwSubject && !subjects.find(s=>s.code===hwSubject)) hwSubject=null;
+
+  // control bar
+  const levelToggle = levels.length>1 ? `<div class="ctrl-row"><span class="ctrl-label">ระดับ</span><div class="seg">${levels.map(l=>`<button class="seg-btn ${hwLevel===l?'active':''}" onclick="hwSet('level','${l}')">${l==='primary'?'ประถม':'มัธยมต้น'}</button>`).join('')}</div></div>` : '';
+  const periods = hwLevel==='primary'?[['midyear','กลางปี'],['endyear','ปลายปี']]:[['term1','ภาคเรียนที่ 1'],['term2','ภาคเรียนที่ 2']];
+  const periodToggle=periods.map(([v,l])=>`<button class="seg-btn ${hwSemester===v?'active':''}" onclick="hwSet('sem','${v}')">${l}</button>`).join('');
+  const gradeChips=grades.map(g=>`<button class="pill ${hwGrade===g?'active':''}" onclick="hwSet('grade','${g}')">${getGradeLabel(hwLevel,g)}</button>`).join('');
+  const subjChips=subjects.map(s=>{
+    const has=homeworkExists(hwLevel,hwSemester,hwGrade,s.code);
+    return `<button class="subj-pill ${has?'st-done':'st-none'} ${hwSubject===s.code?'active':''}" onclick="hwSet('subject','${s.code}')"><span class="st-dot"></span>${s.name}</button>`;
+  }).join('');
+  document.getElementById('hw-controls').innerHTML=`
+    ${levelToggle}
+    <div class="ctrl-row"><span class="ctrl-label">ภาคเรียน</span><div class="seg">${periodToggle}</div></div>
+    <div class="ctrl-row"><span class="ctrl-label">ชั้น</span><div class="pill-wrap">${gradeChips}</div></div>
+    <div class="ctrl-row"><span class="ctrl-label">วิชา</span><div class="pill-wrap subj-wrap">${subjChips||'<span style="color:var(--text-light);font-size:0.88em;">ไม่มีวิชาในชั้นนี้</span>'}</div></div>`;
+
+  const content=document.getElementById('hw-content');
+  if(!hwSubject){ content.innerHTML=`<div class="empty-state"><div class="empty-icon">☝️</div><div class="empty-title">เลือกรายวิชาด้านบน</div><div class="empty-desc">แตะชื่อวิชาเพื่อเริ่มบันทึกการส่งงาน</div></div>`; return; }
+  const students=LS.getStudents(hwLevel,hwSemester,hwGrade);
+  if(students.length===0){ content.innerHTML=emptyCard('👥','ยังไม่มีรายชื่อนักเรียน', isAdmin()?'นำเข้ารายชื่อในหน้าตั้งค่าก่อน':'ให้ผู้ดูแลนำเข้ารายชื่อก่อน'); return; }
+
+  const tabs=`<div class="seg" style="margin-bottom:16px;">
+    <button class="seg-btn ${hwMode==='record'?'active':''}" onclick="hwMode='record';renderHomework()">📝 บันทึก/ชิ้นงาน</button>
+    <button class="seg-btn ${hwMode==='summary'?'active':''}" onclick="hwMode='summary';renderHomework()">📊 สรุป &amp; คะแนน</button>
+  </div>`;
+  content.innerHTML = tabs + (hwMode==='record'? renderHwRecord(students) : renderHwSummary(students));
+}
+
+function hwSet(what,val){
+  if(what==='level'){ if(hwLevel===val)return; hwLevel=val; hwSemester=null; hwGrade=null; hwSubject=null; hwEditing=null; }
+  else if(what==='sem'){ if(hwSemester===val)return; hwSemester=val; hwSubject=null; hwEditing=null; }
+  else if(what==='grade'){ if(hwGrade===val)return; hwGrade=val; hwSubject=null; hwEditing=null; }
+  else if(what==='subject'){ hwSubject=val; hwEditing=null; }
+  renderHomework();
+}
+
+// ---------- RECORD MODE ----------
+function blankHwTask(){ return { id:Date.now(), name:'', note:'', isQuiz:false, quizMax:'', statuses:{} }; }
+function newHwTask(){ hwEditing=blankHwTask(); renderHomework(); }
+function editHwTask(id){
+  const td=LS.getTaskData(hwLevel,hwSemester,hwGrade,hwSubject);
+  const t=td.tasks.find(x=>String(x.id)===String(id)); if(!t) return;
+  hwEditing=JSON.parse(JSON.stringify(t)); renderHomework();
+}
+function cancelHwEdit(){ hwEditing=null; renderHomework(); }
+
+function renderHwRecord(students){
+  const td=LS.getTaskData(hwLevel,hwSemester,hwGrade,hwSubject);
+  const subj=getSubjects(hwLevel,hwSemester,hwGrade).find(s=>s.code===hwSubject);
+  const {kept:maxKept}=getMaxScores(hwSubject,subj.name);
+  const totalQuizMax=td.tasks.filter(t=>t.isQuiz).reduce((s,t)=>s+(Number(t.quizMax)||0),0);
+  const hwMax=Math.max(0,maxKept-totalQuizMax);
+
+  // task list
+  const taskList = td.tasks.length ? td.tasks.map(t=>`
+    <div class="hw-task-row">
+      <div style="flex:1;min-width:0;">
+        <span class="hw-task-tag ${t.isQuiz?'q':'h'}">${t.isQuiz?'🎯 สอบย่อย':'📄 ชิ้นงาน'}</span>
+        <span class="hw-task-name">${t.name}</span>
+        ${t.isQuiz?`<span class="hw-task-meta">เต็ม ${t.quizMax}</span>`:''}${t.date?`<span class="hw-task-meta">${t.date}</span>`:''}
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="editHwTask('${t.id}')">แก้ไข</button>
+      <button class="icon-btn-danger" title="ลบ" onclick="deleteHwTask('${t.id}')">🗑️</button>
+    </div>`).join('') : `<div class="empty-desc" style="padding:10px 0;">ยังไม่มีชิ้นงาน — กดปุ่มด้านล่างเพื่อเพิ่ม</div>`;
+
+  let editor='';
+  if(hwEditing){
+    const t=hwEditing;
+    const grid = t.isQuiz ? renderHwQuizGrid(students) : renderHwSubmitGrid(students);
+    editor=`
+    <div class="card hw-editor">
+      <div class="hw-editor-title">${t._isNew===false?'แก้ไขชิ้นงาน':'เพิ่มชิ้นงานใหม่'}</div>
+      <div class="form-group"><label class="form-label">ชื่อชิ้นงาน/หัวข้อ</label>
+        <input type="text" id="hw-name" class="form-input" placeholder="เช่น ใบงานที่ 1 / สอบเก็บคะแนนบทที่ 2" value="${(t.name||'').replace(/"/g,'&quot;')}" oninput="hwEditing.name=this.value"/></div>
+      <div class="ctrl-row" style="margin-bottom:12px;"><span class="ctrl-label">ประเภท</span><div class="seg">
+        <button class="seg-btn ${!t.isQuiz?'active':''}" onclick="hwEditing.isQuiz=false;renderHomework()">📄 ชิ้นงาน (คิดสัดส่วน)</button>
+        <button class="seg-btn ${t.isQuiz?'active':''}" onclick="hwEditing.isQuiz=true;renderHomework()">🎯 สอบย่อย (คะแนนดิบ)</button>
+      </div></div>
+      ${t.isQuiz?`<div class="form-group" style="max-width:220px;"><label class="form-label">คะแนนเต็มของสอบย่อยนี้</label><input type="number" id="hw-qmax" class="form-input" min="1" placeholder="เช่น 10" value="${t.quizMax||''}" oninput="hwEditing.quizMax=this.value"/></div>`:''}
+      <div class="hw-grid-note">${t.isQuiz?'กรอกคะแนนที่ได้ของแต่ละคน (ถ้ายังไม่สอบกดปุ่มยังไม่สอบ)':'ติ๊กว่าใครส่ง/ไม่ส่ง'} • คะแนนส่วนชิ้นงานเต็ม ${hwMax} | สอบย่อยรวม ${totalQuizMax}</div>
+      ${grid}
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:14px;">
+        <button class="btn btn-outline btn-sm" onclick="cancelHwEdit()">ยกเลิก</button>
+        <button class="btn btn-success btn-sm" onclick="saveHwTask()">💾 บันทึกชิ้นงาน</button>
+      </div>
+    </div>`;
+  }
+
+  return `
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <div style="font-family:var(--font-display);">📚 ชิ้นงานในวิชานี้ (${td.tasks.length})</div>
+        ${!hwEditing?`<button class="btn btn-primary btn-sm" onclick="newHwTask()">➕ เพิ่มชิ้นงาน</button>`:''}
+      </div>
+      <div class="hw-task-list">${taskList}</div>
+    </div>
+    ${editor}`;
+}
+
+function renderHwSubmitGrid(students){
+  const t=hwEditing;
+  const rows=students.map((name,i)=>{
+    const st=t.statuses[i]?(t.statuses[i].status||t.statuses[i]):null;
+    return `<div class="hw-srow">
+      <span class="hw-snum">${i+1}.</span><span class="hw-sname">${name}</span>
+      <div class="hw-sbtns">
+        <button class="btn-submit-s ${st==='submit'?'active':''}" onclick="setHwSubmit(${i},'submit')">✅ ส่ง</button>
+        <button class="btn-notsubmit-s ${st==='not'?'active':''}" onclick="setHwSubmit(${i},'not')">❌ ไม่ส่ง</button>
+        <button class="btn-clear-s" onclick="setHwSubmit(${i},'clear')">–</button>
+      </div></div>`;
+  }).join('');
+  return `<div class="bulk-btns">
+      <button class="btn-bulk all-submit" onclick="bulkHwSubmit('submit')">✅ ส่งทั้งหมด</button>
+      <button class="btn-bulk all-not" onclick="bulkHwSubmit('not')">❌ ไม่ส่งทั้งหมด</button>
+      <button class="btn-bulk all-clear" onclick="bulkHwSubmit('clear')">– ล้างทั้งหมด</button>
+    </div><div id="hw-grid">${rows}</div>`;
+}
+function renderHwQuizGrid(students){
+  const t=hwEditing;
+  const rows=students.map((name,i)=>{
+    const sv=t.statuses[i];
+    const nt=sv&&sv.status==='not_tested';
+    const val=(sv&&sv.status==='scored'&&sv.score!=null)?sv.score:'';
+    return `<div class="hw-srow">
+      <span class="hw-snum">${i+1}.</span><span class="hw-sname">${name}</span>
+      <div class="hw-sbtns">
+        <input type="number" class="hw-qscore" min="0" placeholder="คะแนน" value="${val}" ${nt?'disabled':''} oninput="setHwQuizScore(${i},this.value)"/>
+        <button class="btn-notsubmit-s ${nt?'active':''}" onclick="toggleHwNotTested(${i})">❌ ยังไม่สอบ</button>
+      </div></div>`;
+  }).join('');
+  return `<div class="bulk-btns">
+      <button class="btn-bulk all-not" onclick="bulkHwQuiz('not_tested')">❌ ยังไม่สอบทั้งหมด</button>
+      <button class="btn-bulk all-clear" onclick="bulkHwQuiz('clear')">– ล้างทั้งหมด</button>
+    </div><div id="hw-grid">${rows}</div>`;
+}
+function setHwSubmit(i,status){
+  if(status==='clear') delete hwEditing.statuses[i];
+  else hwEditing.statuses[i]={status,note:(hwEditing.statuses[i]&&hwEditing.statuses[i].note)||''};
+  renderHomework();
+}
+function bulkHwSubmit(status){
+  const students=LS.getStudents(hwLevel,hwSemester,hwGrade);
+  students.forEach((_,i)=>{ if(status==='clear') delete hwEditing.statuses[i]; else hwEditing.statuses[i]={status}; });
+  renderHomework();
+}
+function setHwQuizScore(i,v){
+  const num=v===''?null:parseFloat(v);
+  hwEditing.statuses[i]={status:'scored',score:isNaN(num)?null:num};
+}
+function toggleHwNotTested(i){
+  const sv=hwEditing.statuses[i];
+  if(sv&&sv.status==='not_tested') delete hwEditing.statuses[i];
+  else hwEditing.statuses[i]={status:'not_tested',score:null};
+  renderHomework();
+}
+function bulkHwQuiz(type){
+  const students=LS.getStudents(hwLevel,hwSemester,hwGrade);
+  students.forEach((_,i)=>{ if(type==='clear') delete hwEditing.statuses[i]; else hwEditing.statuses[i]={status:'not_tested',score:null}; });
+  renderHomework();
+}
+async function saveHwTask(){
+  const t=hwEditing;
+  if(!t.name||!t.name.trim()){ showToast('⚠️','กรุณาใส่ชื่อชิ้นงาน',''); return; }
+  if(t.isQuiz){ const q=parseFloat(t.quizMax); if(!q||q<=0){ showToast('⚠️','กรุณาระบุคะแนนเต็มสอบย่อย',''); return; } t.quizMax=q; }
+  else { t.quizMax=0; }
+  // ชิ้นงานปกติ: ช่องที่ไม่ติ๊ก = ยังไม่ส่ง
+  const students=LS.getStudents(hwLevel,hwSemester,hwGrade);
+  if(!t.isQuiz){ students.forEach((_,i)=>{ if(!t.statuses[i]) t.statuses[i]={status:'not'}; }); }
+  const clean={ id:t.id, name:t.name.trim(), note:t.note||'', date:t.date||'', isQuiz:!!t.isQuiz, quizMax:t.isQuiz?t.quizMax:0, statuses:t.statuses };
+  const td=LS.getTaskData(hwLevel,hwSemester,hwGrade,hwSubject);
+  const idx=td.tasks.findIndex(x=>String(x.id)===String(clean.id));
+  if(idx>=0) td.tasks[idx]=clean; else td.tasks.push(clean);
+  await LS.saveTaskData(hwLevel,hwSemester,hwGrade,hwSubject,td);
+  await materializeHomeworkToScores(hwLevel,hwSemester,hwGrade,hwSubject);
+  hwEditing=null;
+  showToast('✅','บันทึกชิ้นงานแล้ว',clean.name);
+  renderHomework();
+}
+async function deleteHwTask(id){
+  const td=LS.getTaskData(hwLevel,hwSemester,hwGrade,hwSubject);
+  const t=td.tasks.find(x=>String(x.id)===String(id));
+  showConfirm('🗑️','ลบชิ้นงาน',`ลบ "${t?t.name:''}" ออกจากวิชานี้?`, async ()=>{
+    td.tasks=td.tasks.filter(x=>String(x.id)!==String(id));
+    await LS.saveTaskData(hwLevel,hwSemester,hwGrade,hwSubject,td);
+    await materializeHomeworkToScores(hwLevel,hwSemester,hwGrade,hwSubject);
+    if(hwEditing&&String(hwEditing.id)===String(id)) hwEditing=null;
+    showToast('✅','ลบแล้ว','');
+    renderHomework();
+  },'ลบ');
+}
+
+// ---------- SUMMARY MODE ----------
+function renderHwSummary(students){
+  const td=LS.getTaskData(hwLevel,hwSemester,hwGrade,hwSubject);
+  const subj=getSubjects(hwLevel,hwSemester,hwGrade).find(s=>s.code===hwSubject);
+  const {kept:maxKept}=getMaxScores(hwSubject,subj.name);
+  if(!td.tasks.length) return emptyCard('🌸','ยังไม่มีชิ้นงาน','ไปแท็บ "บันทึก/ชิ้นงาน" เพื่อเพิ่มชิ้นงานก่อน');
+  const quizTasks=td.tasks.filter(t=>t.isQuiz), hwTasks=td.tasks.filter(t=>!t.isQuiz);
+  const totalQuizMax=quizTasks.reduce((s,t)=>s+(Number(t.quizMax)||0),0);
+  const hwMax=Math.max(0,maxKept-totalQuizMax);
+  const base=computeSubmissionScores(hwLevel,hwSemester,hwGrade,hwSubject)||[];
+
+  let head=`<tr><th class="hw-name-th">ชื่อ-สกุล</th>`;
+  quizTasks.forEach(t=>head+=`<th>🎯 ${t.name}<br><small>(เต็ม ${t.quizMax})</small></th>`);
+  hwTasks.forEach(t=>head+=`<th>📄 ${t.name}</th>`);
+  head+=`<th>ส่งงาน</th><th>คะแนนชิ้นงาน<br><small>(${hwMax})</small></th><th>สอบย่อย<br><small>(${totalQuizMax})</small></th><th>คะแนนเก็บ<br><small>(เต็ม ${maxKept})</small></th></tr>`;
+
+  let body='';
+  const missers=[];
+  students.forEach((name,i)=>{
+    let row=`<tr><td class="hw-name-col">${name}</td>`;
+    let quizTotal=0;
+    quizTasks.forEach(t=>{ const sv=t.statuses&&t.statuses[i];
+      if(!sv||sv.status==='not_tested'){ row+=`<td><span class="ic-not"></span></td>`; }
+      else { const sc=sv.score!=null?sv.score:'?'; row+=`<td>${sc}</td>`; if(sv.score!=null)quizTotal+=parseFloat(sv.score)||0; }
+    });
+    let sub=0;
+    hwTasks.forEach(t=>{ const st=t.statuses&&t.statuses[i]&&(t.statuses[i].status||t.statuses[i]);
+      if(st==='submit'){ row+=`<td><span class="ic-submit"></span></td>`; sub++; }
+      else { row+=`<td><span class="ic-not"></span></td>`; }
+    });
+    const hwTotal=hwTasks.length;
+    const hwScore=hwTotal>0?Math.round(sub/hwTotal*hwMax):0;
+    row+=`<td>${sub}/${hwTotal}</td><td>${hwScore}</td><td style="color:#7a5ad0;">${quizTotal}</td><td class="hw-total">${base[i]||0}</td></tr>`;
+    body+=row;
+    const mHw=hwTasks.filter(t=>(t.statuses&&t.statuses[i]&&(t.statuses[i].status||t.statuses[i]))!=='submit');
+    const mQ=quizTasks.filter(t=>{const sv=t.statuses&&t.statuses[i];return !sv||sv.status==='not_tested';});
+    if(mHw.length||mQ.length) missers.push({name,n:mHw.length+mQ.length});
+  });
+  missers.sort((a,b)=>b.n-a.n);
+  const missHtml = missers.length
+    ? missers.map(m=>`<div class="hw-miss"><span>👤 ${m.name}</span><span class="hw-miss-c">ค้าง ${m.n}</span></div>`).join('')
+    : `<div class="empty-desc">🎉 ทุกคนส่งงานและสอบครบแล้ว</div>`;
+
+  return `<div class="card" style="padding:16px;">
+    <div style="font-size:0.85em;color:var(--text-sub);margin-bottom:10px;">🎯 สอบย่อย ${totalQuizMax} คะแนน • 📝 ชิ้นงาน ${hwMax} คะแนน • รวมคะแนนเก็บ ${maxKept} คะแนน</div>
+    <div class="hw-table-wrap"><table class="hw-table"><thead>${head}</thead><tbody>${body}</tbody></table></div>
+  </div>
+  <div class="card"><div style="font-family:var(--font-display);margin-bottom:10px;">🚨 ค้างส่ง / ยังไม่สอบ</div>${missHtml}</div>`;
+}
+
+// เขียนคะแนนเก็บจากการส่งงาน (ฐาน+บวก ตันเพดาน) ลงในคะแนนจริง — คงค่า ร/มส และคะแนนสอบไว้
+async function materializeHomeworkToScores(level,sem,grade,code){
+  const subj=getSubjects(level,sem,grade).find(s=>s.code===code); if(!subj) return;
+  if(!homeworkActive(level,sem,grade,code)) return;
+  const {kept:maxKept}=getMaxScores(code,subj.name);
+  const students=LS.getStudents(level,sem,grade);
+  const scores=Object.assign({},LS.getScores(level,sem,grade,code));
+  for(let i=0;i<students.length;i++){
+    const cur=scores[i]||{};
+    if(cur.kept==='ร'||cur.kept==='มส') continue; // คง ร/มส
+    const mk=materializedKept(level,sem,grade,code,i,maxKept);
+    const exam=(cur.exam!=null&&cur.exam!==''&&!isNaN(cur.exam))?Number(cur.exam):null;
+    const total=exam!=null?mk.value+exam:null;
+    scores[i]={kept:mk.value,exam,total,grade:total!=null?calculateGrade(total):null};
+  }
+  await LS.saveScores(level,sem,grade,code,scores);
+}
 
 function renderScoresView() {
   const gl = getGradeLabel(currentLevel,currentGrade);
@@ -1625,6 +2090,10 @@ function renderScoreTable(subjectCode){
     area.innerHTML=`<div class="card"><div class="empty-state" style="padding:40px 20px;"><div class="empty-icon">👥</div><div class="empty-title">ยังไม่มีรายชื่อนักเรียน</div><div class="empty-desc">ชั้นนี้ยังไม่มีรายชื่อสำหรับ${getSemesterLabel(currentLevel,currentSemester)}</div>${importBtn}</div></div>`;
     return;
   }
+  const hwTracked = homeworkExists(currentLevel,currentSemester,currentGrade,subjectCode);
+  const hwOn = hwTracked && homeworkActive(currentLevel,currentSemester,currentGrade,subjectCode);
+  if(hwOn){ renderScoreTableHW(subjectCode,subject,students,maxKept,maxExam,examLabel); return; }
+  const offBanner = hwTracked ? `<div class="hw-off-banner no-print"><label class="te-check"><input type="checkbox" checked onchange="toggleAutoImport(this.checked)"/> ไม่นำเข้าคะแนนเก็บอัตโนมัติจากการส่งงาน (กรอกเอง)</label><span class="hw-off-note">วิชานี้มีข้อมูลการส่งงาน — ติ๊กออกเพื่อให้ดึงคะแนนอัตโนมัติ</span></div>` : '';
   area.innerHTML=`
     <div class="card" style="padding:0;overflow:hidden;margin-bottom:0;">
       <div style="padding:20px 24px 16px;">
@@ -1633,6 +2102,7 @@ function renderScoreTable(subjectCode){
           <div class="score-ratio-badge">คะแนนเก็บ <strong>${maxKept}</strong> | ${examLabel} <strong>${maxExam}</strong></div>
         </div>
         <div class="kbd-hint no-print">⌨️ กด <kbd>Enter</kbd> หรือ <kbd>↓</kbd> เพื่อลงช่องถัดไป • <kbd>Tab</kbd> เลื่อนขวา</div>
+        ${offBanner}
       </div>
       <div class="table-container" style="border-radius:0;border:none;border-top:1px solid var(--border-light);">
         <table><thead><tr>
@@ -1751,6 +2221,148 @@ function updateScoreStats(){
     ${warn.length?`<div class="stats-warn">⚠️ ${warn.join(' • ')}</div>`:''}`;
 }
 
+let hwAdjPerStudent=false;
+function renderScoreTableHW(subjectCode,subject,students,maxKept,maxExam,examLabel){
+  const area=document.getElementById('score-table-area');
+  const scores=LS.getScores(currentLevel,currentSemester,currentGrade,subjectCode);
+  const rows=students.map((name,i)=>{
+    const sc=scores[i]||{};
+    const special=(sc.kept==='ร'||sc.kept==='มส')?sc.kept:'';
+    const mk=materializedKept(currentLevel,currentSemester,currentGrade,subjectCode,i,maxKept);
+    const examV=(sc.exam!=null&&sc.exam!==''&&!isNaN(sc.exam))?sc.exam:'';
+    const keptCell = special
+      ? `<span class="grade-cell">${special}</span>`
+      : `<span class="hw-kept ${mk.capped?'capped':''}">${mk.value}</span><span class="hw-kept-hint">ฐาน ${mk.base}${mk.adj?(mk.adj>0?' +'+mk.adj:' '+mk.adj):''}${mk.capped?' • ตันเพดาน':''}</span>`;
+    const total = special?'' : (examV!==''?mk.value+Number(examV):'');
+    const grade = special?special : (total!==''?calculateGrade(total):'');
+    const adjBtns = (hwAdjPerStudent && !special) ? `<div class="hw-adj-mini"><button onclick="adjOne(${i},-1)">−</button><span>${mk.adj>0?'+'+mk.adj:mk.adj}</span><button onclick="adjOne(${i},1)">+</button></div>` : '';
+    return `<tr id="row-${i}">
+      <td>${i+1}</td><td>${name}</td>
+      <td>${keptCell}</td>
+      ${hwAdjPerStudent?`<td>${adjBtns}</td>`:''}
+      <td><select class="hw-special-sel" onchange="setRowSpecialHW(${i},this.value)">
+        <option value="" ${!special?'selected':''}>ปกติ</option>
+        <option value="ร" ${special==='ร'?'selected':''}>ร</option>
+        <option value="มส" ${special==='มส'?'selected':''}>มส</option></select></td>
+      <td><input type="number" class="score-input" data-idx="${i}" data-type="exam" value="${special?'':examV}" min="0" max="${maxExam}" placeholder="—" inputmode="decimal" ${special?'disabled':''} oninput="onExamInputHW(this,${maxExam})" onkeydown="scoreKey(event,this)"/></td>
+      <td id="total-${i}"><span class="grade-cell">${total!==''?total:'—'}</span></td>
+      <td id="grade-${i}">${grade!==''?gradeSpan(grade):'—'}</td>
+    </tr>`;
+  }).join('');
+
+  area.innerHTML=`
+    <div class="card" style="padding:0;overflow:hidden;margin-bottom:0;">
+      <div style="padding:20px 24px 16px;">
+        <div class="table-header-info">
+          <div class="subject-info-block"><div class="subject-code">${subjectCode}</div><div class="subject-fullname">${subject.name}</div></div>
+          <div class="score-ratio-badge">คะแนนเก็บ <strong>${maxKept}</strong> | ${examLabel} <strong>${maxExam}</strong></div>
+        </div>
+        <div class="hw-auto-banner no-print">
+          <span class="hw-auto-on">🔗 คะแนนเก็บดึงจากการส่งงานอัตโนมัติ (ล็อก แก้ผ่านปุ่มบวก/หน้าส่งงาน)</span>
+          <label class="te-check"><input type="checkbox" onchange="toggleAutoImport(this.checked)"/> ไม่นำเข้าอัตโนมัติ (กรอกเอง)</label>
+        </div>
+        <div class="hw-add-panel no-print">
+          <span class="hw-add-title">➕ บวกคะแนนเพิ่ม (นอกเหนือจากส่งงาน)</span>
+          <div class="hw-add-bulk">
+            <span>ทั้งชั้น</span>
+            <input type="number" id="hw-bulk-n" value="1" min="1" style="width:64px;"/>
+            <button class="btn btn-outline btn-sm" onclick="adjBulk(1)">➕ บวก</button>
+            <button class="btn btn-outline btn-sm" onclick="adjBulk(-1)">➖ ลบ</button>
+          </div>
+          <label class="te-check"><input type="checkbox" ${hwAdjPerStudent?'checked':''} onchange="hwAdjPerStudent=this.checked;renderScoresView()"/> บวกรายบุคคล (±1 หลังชื่อ)</label>
+        </div>
+      </div>
+      <div class="table-container" style="border-radius:0;border:none;border-top:1px solid var(--border-light);">
+        <table><thead><tr>
+          <th style="width:50px;">เลขที่</th><th>ชื่อ-นามสกุล</th>
+          <th>คะแนนเก็บ<br/><span style="font-weight:400;color:var(--text-light)">(/${maxKept})</span></th>
+          ${hwAdjPerStudent?'<th>บวก/ลบ</th>':''}
+          <th>ร/มส</th>
+          <th>${examLabel}<br/><span style="font-weight:400;color:var(--text-light)">(/${maxExam})</span></th>
+          <th>คะแนนรวม</th><th>เกรด</th>
+        </tr></thead><tbody>${rows}</tbody></table>
+      </div>
+      <div class="save-bar no-print">
+        <span id="autosave-status" style="font-size:0.78em;color:var(--text-light);"></span>
+        <div class="flex gap-1"><button class="btn btn-success" onclick="saveScoresHW()">💾 บันทึก</button></div>
+      </div>
+    </div>`;
+}
+async function toggleAutoImport(checked){
+  const td=LS.getTaskData(currentLevel,currentSemester,currentGrade,currentSubjectCode);
+  td.autoOff=checked;
+  await LS.saveTaskData(currentLevel,currentSemester,currentGrade,currentSubjectCode,td);
+  if(!checked) await materializeHomeworkToScores(currentLevel,currentSemester,currentGrade,currentSubjectCode);
+  isDirty=false; renderScoresView();
+}
+async function adjBulk(sign){
+  const n=parseInt(document.getElementById('hw-bulk-n')?.value)||0;
+  if(n<=0) return;
+  const delta=sign*n;
+  const td=LS.getTaskData(currentLevel,currentSemester,currentGrade,currentSubjectCode);
+  const students=LS.getStudents(currentLevel,currentSemester,currentGrade);
+  td.adj=td.adj||{};
+  students.forEach((_,i)=>{ td.adj[i]=(Number(td.adj[i])||0)+delta; });
+  await LS.saveTaskData(currentLevel,currentSemester,currentGrade,currentSubjectCode,td);
+  await materializeHomeworkToScores(currentLevel,currentSemester,currentGrade,currentSubjectCode);
+  showToast('✅','บวกคะแนนทั้งชั้นแล้ว',`${delta>0?'+':''}${delta} ทุกคน`);
+  renderScoreTable(currentSubjectCode);
+}
+async function adjOne(i,delta){
+  const td=LS.getTaskData(currentLevel,currentSemester,currentGrade,currentSubjectCode);
+  td.adj=td.adj||{}; td.adj[i]=(Number(td.adj[i])||0)+delta;
+  await LS.saveTaskData(currentLevel,currentSemester,currentGrade,currentSubjectCode,td);
+  await materializeHomeworkToScores(currentLevel,currentSemester,currentGrade,currentSubjectCode);
+  renderScoreTable(currentSubjectCode);
+}
+async function setRowSpecialHW(i,val){
+  const scores=Object.assign({},LS.getScores(currentLevel,currentSemester,currentGrade,currentSubjectCode));
+  if(val==='ร'||val==='มส'){ scores[i]={kept:val,exam:null,total:null,grade:val}; }
+  else {
+    const {kept:maxKept}=getMaxScores(currentSubjectCode,getSubjects(currentLevel,currentSemester,currentGrade).find(s=>s.code===currentSubjectCode).name);
+    const mk=materializedKept(currentLevel,currentSemester,currentGrade,currentSubjectCode,i,maxKept);
+    const cur=scores[i]||{}; const exam=(cur.exam!=null&&!isNaN(cur.exam))?cur.exam:null;
+    const total=exam!=null?mk.value+exam:null;
+    scores[i]={kept:mk.value,exam,total,grade:total!=null?calculateGrade(total):null};
+  }
+  await LS.saveScores(currentLevel,currentSemester,currentGrade,currentSubjectCode,scores);
+  renderScoreTable(currentSubjectCode);
+}
+function onExamInputHW(input,maxExam){
+  const idx=parseInt(input.dataset.idx);
+  const v=input.value.trim();
+  const {kept:maxKept}=getMaxScores(currentSubjectCode,getSubjects(currentLevel,currentSemester,currentGrade).find(s=>s.code===currentSubjectCode).name);
+  const mk=materializedKept(currentLevel,currentSemester,currentGrade,currentSubjectCode,idx,maxKept);
+  const num=v===''?null:parseFloat(v);
+  if(v!==''&&(isNaN(num)||num<0||num>maxExam)){ input.classList.add('error'); input.title=`กรอกได้ 0–${maxExam}`; return; }
+  input.classList.remove('error'); input.title='';
+  const te=document.getElementById(`total-${idx}`), ge=document.getElementById(`grade-${idx}`);
+  if(num!=null){ const tot=mk.value+num; if(te)te.innerHTML=`<span class="grade-cell">${tot}</span>`; if(ge)ge.innerHTML=gradeSpan(calculateGrade(tot)); }
+  else { if(te)te.innerHTML='<span class="grade-cell">—</span>'; if(ge)ge.innerHTML='—'; }
+  markDirty();
+}
+async function saveScoresHW(){
+  if(document.querySelectorAll('#score-table-area .score-input.error').length>0){ showToast('⚠️','มีคะแนนสอบไม่ถูกต้อง','แก้ช่องที่ขึ้นสีแดงก่อน'); return; }
+  const code=currentSubjectCode;
+  const {kept:maxKept}=getMaxScores(code,getSubjects(currentLevel,currentSemester,currentGrade).find(s=>s.code===code).name);
+  const students=LS.getStudents(currentLevel,currentSemester,currentGrade);
+  const cur=LS.getScores(currentLevel,currentSemester,currentGrade,code);
+  const data={};
+  students.forEach((_,i)=>{
+    const c=cur[i]||{};
+    if(c.kept==='ร'||c.kept==='มส'){ data[i]={kept:c.kept,exam:null,total:null,grade:c.kept}; return; }
+    const mk=materializedKept(currentLevel,currentSemester,currentGrade,code,i,maxKept);
+    const ei=document.querySelector(`input[data-idx="${i}"][data-type="exam"]`);
+    const ev=ei&&ei.value.trim()!==''?Number(ei.value):null;
+    const total=ev!=null?mk.value+ev:null;
+    data[i]={kept:mk.value,exam:ev,total,grade:total!=null?calculateGrade(total):null};
+  });
+  await LS.saveScores(currentLevel,currentSemester,currentGrade,code,data);
+  markClean();
+  showToast('✅','บันทึกคะแนนแล้ว',`${getGradeLabel(currentLevel,currentGrade)} • ${getSubjects(currentLevel,currentSemester,currentGrade).find(s=>s.code===code).name}`);
+  renderScoresView();
+}
+
 function onScoreInput(input, maxVal){
   const val = input.value.trim();
   const isSpecialGrade = val==='ร' || val==='มส';
@@ -1846,17 +2458,18 @@ async function clearAllScores(){
 
 // ===================== BACKUP / RESTORE / CLEAR (admin) =====================
 function backupAllData(){
-  const students={}, scores={};
+  const students={}, scores={}, tasks={};
   for(let i=0;i<localStorage.length;i++){
     const k=localStorage.key(i); if(!k) continue;
     try{
       if(k.startsWith('stu|')) students[k]=JSON.parse(localStorage.getItem(k));
       else if(k.startsWith('sc|')) scores[k]=JSON.parse(localStorage.getItem(k));
+      else if(k.startsWith('tk|')) tasks[k]=JSON.parse(localStorage.getItem(k));
     }catch{}
   }
   const {name,year}=getSchoolInfo();
   const backup={ _meta:{app:'bnp-grades',version:1,exportedAt:new Date().toISOString()},
-    school:{name,year}, teachers:TEACHERS, students, scores };
+    school:{name,year}, teachers:TEACHERS, students, scores, tasks };
   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'});
   const d=new Date();
   const stamp=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -1864,7 +2477,7 @@ function backupAllData(){
   a.href=URL.createObjectURL(blob);
   a.download=`สำรองข้อมูล-${(name||'โรงเรียน').replace(/\s+/g,'_')}-${stamp}.json`;
   document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(a.href);
-  showToast('✅','สำรองข้อมูลแล้ว',`รายชื่อ ${Object.keys(students).length} ชุด • คะแนน ${Object.keys(scores).length} วิชา • ครู ${TEACHERS.length} คน`);
+  showToast('✅','สำรองข้อมูลแล้ว',`รายชื่อ ${Object.keys(students).length} ชุด • คะแนน ${Object.keys(scores).length} วิชา • ส่งงาน ${Object.keys(tasks).length} วิชา • ครู ${TEACHERS.length} คน`);
 }
 
 function pickRestoreFile(){ document.getElementById('restore-file-input').click(); }
@@ -1888,6 +2501,7 @@ async function doRestore(data){
   await saveTeachers();
   for(const [k,names] of Object.entries(data.students||{})){ const p=k.split('|'); await LS.saveStudents(p[1],p[2],p[3],names); }
   for(const [k,sc] of Object.entries(data.scores||{})){ const p=k.split('|'); await LS.saveScores(p[1],p[2],p[3],p[4],sc); }
+  for(const [k,td] of Object.entries(data.tasks||{})){ const p=k.split('|'); await LS.saveTaskData(p[1],p[2],p[3],p[4],td); }
   updateSchoolUI();
   showToast('✅','กู้คืนข้อมูลแล้ว','โหลดข้อมูลจากไฟล์สำรองเรียบร้อย');
   if(document.getElementById('teacher-manager')) renderTeacherManager();
@@ -2093,6 +2707,55 @@ function getSecondaryScore(semester, grade, subjectCode, studentIdx) {
 }
 
 // ===================== TEACHER SUMMARY (ครูดู/พิมพ์เฉพาะวิชาตัวเอง) =====================
+let summaryLock=null;            // {level,grade} เมื่อครูประจำชั้นดูแบบล็อกห้อง
+let teacherSumMode='subjects';   // 'subjects' | 'homeroom'
+let teacherSumHomeroomGrade=null;
+
+function getTeacherHomerooms(t){
+  if(!t || !Array.isArray(t.homeroom)) return [];
+  return t.homeroom.map(g=>({grade:g, level: g.charAt(0)==='p'?'primary':'secondary'}));
+}
+
+// ครูเข้าหน้าสรุป → ตัดสินใจว่าจะแสดงโหมดไหน
+function renderTeacherSummaryArea(){
+  const bar=document.getElementById('summary-mode-bar');
+  const t=currentTeacher;
+  const homerooms=getTeacherHomerooms(t);
+  const teaches=teacherSummaryOptions().length>0;
+  if(homerooms.length===0) teacherSumMode='subjects';
+  else if(!teaches) teacherSumMode='homeroom';
+
+  let barHtml='';
+  if(homerooms.length>0 && teaches){
+    barHtml += `<div class="scores-controls" style="margin-bottom:14px;"><div class="ctrl-row"><span class="ctrl-label">ดู</span><div class="seg">
+      <button class="seg-btn ${teacherSumMode==='subjects'?'active':''}" onclick="teacherSumMode='subjects';renderTeacherSummaryArea()">📚 วิชาที่ฉันสอน</button>
+      <button class="seg-btn ${teacherSumMode==='homeroom'?'active':''}" onclick="teacherSumMode='homeroom';renderTeacherSummaryArea()">🏫 ห้องที่ฉันประจำชั้น</button>
+    </div></div></div>`;
+  }
+  if(teacherSumMode==='homeroom' && homerooms.length>1){
+    if(!teacherSumHomeroomGrade||!homerooms.find(h=>h.grade===teacherSumHomeroomGrade)) teacherSumHomeroomGrade=homerooms[0].grade;
+    barHtml += `<div class="scores-controls" style="margin-bottom:14px;"><div class="ctrl-row"><span class="ctrl-label">ห้องประจำชั้น</span><div class="pill-wrap">${homerooms.map(x=>`<button class="pill ${x.grade===teacherSumHomeroomGrade?'active':''}" onclick="teacherSumHomeroomGrade='${x.grade}';renderTeacherSummaryArea()">${getGradeLabel(x.level,x.grade)}</button>`).join('')}</div></div></div>`;
+  }
+  bar.innerHTML=barHtml;
+
+  if(teacherSumMode==='homeroom' && homerooms.length>0){
+    if(!teacherSumHomeroomGrade||!homerooms.find(h=>h.grade===teacherSumHomeroomGrade)) teacherSumHomeroomGrade=homerooms[0].grade;
+    const h=homerooms.find(x=>x.grade===teacherSumHomeroomGrade);
+    renderHomeroomSummary(h.level,h.grade);
+  } else {
+    summaryLock=null;
+    renderTeacherSummary();
+  }
+}
+// ครูประจำชั้น: สรุปทั้งห้องแบบแอดมิน แต่ตรึงห้องไว้ (ดู/พิมพ์เท่านั้น)
+function renderHomeroomSummary(level,grade){
+  summaryLock={level,grade};
+  sumLevel=level; sumGrade=grade;
+  const valid = level==='primary'?['midyear','endyear']:['term1','term2'];
+  if(!valid.includes(sumSemester)) sumSemester = level==='primary'?'midyear':'term1';
+  renderSummary();
+}
+
 let tsumKey=null;      // 'level|grade|subjectName'
 let tsumTerm='term1';
 function teacherSummaryOptions(){
@@ -2202,12 +2865,19 @@ function renderSummary(){
       <option value="ind-combined">สรุปทุกวิชา (รวมคะแนน)</option>
     </optgroup>`;
 
+  const levelControl = summaryLock
+    ? `<span class="locked-pill">${sumLevel==='primary'?'📚 ประถมศึกษา':'🎓 มัธยมต้น'}</span>`
+    : `<select class="form-input" style="width:auto;padding:7px 12px;font-size:13px;" onchange="onSumLevelChange(this.value)">${levelOpts}</select>`;
+  const gradeControl = summaryLock
+    ? `<span class="locked-pill">${gl}</span>`
+    : `<select id="sum-grade-sel" class="form-input" style="width:auto;padding:7px 12px;font-size:13px;" onchange="onSumGradeChange(this.value)">${gradeOpts}</select>`;
+
   content.innerHTML=`
     <div class="summary-controls no-print">
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;width:100%;">
-        <select class="form-input" style="width:auto;padding:7px 12px;font-size:13px;" onchange="onSumLevelChange(this.value)">${levelOpts}</select>
+        ${levelControl}
         ${sumLevel==='secondary'?`<select id="sum-semester-sel" class="form-input" style="width:auto;padding:7px 12px;font-size:13px;" onchange="onSumSemesterChange(this.value)">${semOpts}</select>`:''}
-        <select id="sum-grade-sel" class="form-input" style="width:auto;padding:7px 12px;font-size:13px;" onchange="onSumGradeChange(this.value)">${gradeOpts}</select>
+        ${gradeControl}
         <div style="width:1px;height:24px;background:var(--border);"></div>
         <select id="summary-view-type" class="form-input" style="width:auto;padding:7px 12px;font-size:13px;" onchange="renderSummaryTable()">${classViewOpts}</select>
         <select id="summary-subject-select" class="form-input hidden" style="width:auto;padding:7px 12px;font-size:13px;" onchange="renderSummaryTable()">
